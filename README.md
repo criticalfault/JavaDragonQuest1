@@ -5,7 +5,7 @@ Dragon Quest 1 / Dragon Warrior 1 implemented in java 8 using only standard libr
 
 ## Win64 Executable / Runnable jar / Source code - v0.0.1 (java 8)
 
-https://github.com/leonardo-ono/JavaDragonQuest1/releases/tag/v0.0.1
+https://github.com/leonardo-ono/JavaDragonQuest1/releases/tag/v0.0.2
 
 
 ## Keyboard Controls
