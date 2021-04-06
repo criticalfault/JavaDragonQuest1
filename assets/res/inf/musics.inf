@@ -1,0 +1,9 @@
+#             id       midi_file  start_tick_position   loop_start_tick   loop_end_tick  loop_count
+music      intro,          intro,                   0,             4000,          16320,         -1
+music   tantegel,       tantegel,                   0,                0,          30720,         -1
+music      world,          world,                   0,                0,           4908,         -1
+music       town,           town,                1300,             1400,          78200,         -1
+music    dungeon,        dungeon,                 680,              400,           9686,         -1
+music     battle,         battle,                 500,             5700,          24950,         -1
+music       boss,           boss,                   0,                0,           8640,         -1
+music     ending,         ending,                   0,            41248,          41248,          0

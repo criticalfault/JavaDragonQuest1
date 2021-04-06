@@ -1,0 +1,273 @@
+; --- garinham ---
+; ----------------
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 27 27
+
+
+;door {event_name} {sprite_id} {pos_col} {pos_row} {persistent}
+;---
+door door_1 22 26 20 false
+door door_2 22 51 13 false
+door door_3 22 101 27 false
+
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+chest chest_4 55 12 gold_10_17 false
+
+; torch item (id = 43)
+chest chest_5 56 12 43 false
+
+; herb item (id = 41)
+chest chest_6 55 13 41 false
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} {map_id} \
+;          {player_col} {player_row} {player_direction} \
+;          {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;          {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;          {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_1 31 26 19 garinham 64 16 up no_sound false town false true false true
+
+teleport teleport_2 36 64 17 garinham 26 20 down no_sound false town false true false true
+teleport teleport_3 36 50 9 garinham 12 11 up no_sound false town false true false true
+
+teleport teleport_4 31 12 12 garinham 50 10 down no_sound false town false true false true
+
+; Garin's Grave entrance
+teleport teleport_6 29 28 9 garinham 91 22 right default_sound true dungeon true true false true
+
+
+;inn {event_name} {pos_col} {pos_row} {inn_price}
+; ---
+inn inn_1 25 25 25
+
+
+shop_item shop_item_1 13 21 \
+    ; herb item (id = 41)
+    41 default_price default_price \
+    ; torch item (id = 43)
+    43 default_price default_price \
+    ; dragon's scale (id = 44)
+    44 default_price default_price
+
+
+shop_equip shop_equip_1 19 27 \
+    ; club (id = 12)
+    12 default_price default_price \
+    ; copper sword (id = 13)
+    13 default_price default_price \
+    ; hand axe (id = 16)
+    16 default_price default_price \
+    ; leather armor (id = 25)
+    25 default_price default_price \
+    ; chain mail (id = 20)
+    20 default_price default_price \
+    ; half plate (id = 24)
+    24 default_price default_price \
+    ; large shield (id = 30)
+    30 default_price default_price
+
+
+;npc {event_id} {sprite_start_id} {pos_col} {pos_row} 
+; STATIC {sprite_direction} | RANDOM {rect_col} {rect_row} {rect_width} {rect_height}
+; {texts_global_var_0} ... {texts_global_var_n} | conditional_msgs 
+;    {var_a} {comparisson_operator} {var_b} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+;    {var_c} {comparisson_operator} {var_d} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+;    {var_e} {comparisson_operator} options 2 (no. of options) 2 (default start option [not implemented!]) 0 (cancel_option / -1 will force to choose one of options)
+;                                   {yes_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+;                                   {no_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+; ---
+;    sprite_start_id  description
+; 0                0  hero
+; 1                8  boy
+; 2               16  hero
+; 3               24  girl
+; 4               32  hero
+; 5               40  old_man
+; 6               48  hero
+; 7               56  merchant
+; 8               64  hero_princess
+; 9               72  warrior
+;10               80  princess
+;11               88  dragon_lord
+;12               96  guard
+;13              104  guard_bugle
+;14              106  king
+; ---
+npc npc_shop_item 56 14 21 \
+    STATIC left \
+    @@empty
+
+npc npc_shop_equip 56 19 28 \
+    STATIC up \
+    @@empty
+
+npc npc_inn 56 26 25 \
+    STATIC left \
+    @@empty
+
+;@@garinham_old_man_1 = Many believe that Princess Gwaelin is hidden away in a cave.
+;@@garinham_old_man_2 = Garin, a wandering minstrel of legendary fame, is said to have built this town.
+;@@garinham_old_man_3 = They say that Erdrick's armor was hidden long ago.
+;@@garinham_old_man_4 = The harp attracts enemies. | Stay away from the grave in Garinham.
+
+npc old_man_1 40 11 27 \
+    STATIC right \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@garinham_old_man \
+        1 == 1 1 @@garinham_old_man_1
+
+npc old_man_2 40 17 24 \
+    RANDOM 9 20 14 10 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@garinham_old_man \
+        1 == 1 1 @@garinham_old_man_2
+
+npc old_man_3 40 52 10 \
+    RANDOM 48 10 12 6 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@garinham_old_man \
+        1 == 1 1 @@garinham_old_man_3
+
+npc old_man_4 40 23 10 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@garinham_old_man \
+        1 == 1 1 @@garinham_old_man_4
+
+;@@garinham_girl_1 = Welcome to Garinham. | May thy stay be a peaceful one.
+;@@garinham_girl_2 = I hate people! | Go! Leave me!
+
+npc girl_1 24 12 23 \
+    RANDOM 9 20 15 10 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@garinham_girl_1
+
+npc girl_2 24 63 14 \
+    RANDOM 50 10 16 7 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@garinham_girl_2
+
+;@@garinham_boy_1 = It is said that the Princess was kidnapped and taken eastward.
+;@@garinham_boy_2 = Once there was a town called Hauksness far to the south, but I do not know if it still exists.
+
+npc boy_1 8 26 23 \
+    RANDOM 13 21 16 9 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@garinham_boy_1
+
+npc boy_2 8 49 14 \
+    RANDOM 50 10 16 7 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@garinham_boy_2
+
+;@@garinham_warrior_1 = I have heard of one named Nester. | Dost thou know such a one?
+
+npc warrior_1 72 18 24 \
+    RANDOM 10 20 16 10 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@garinham_warrior_1
+
+;@@garinham_merchant_1 = I suggest making a map if thy path leads into the darkness.
+
+npc merchant_1 56 58 12 \
+    RANDOM 48 10 16 6 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@garinham_merchant_1
+
+;@@garinham_guard_1 = I'm too busy. | Ask the other guard.
+;@@garinham_guard_2 = I'm too busy. | Ask the other guard.
+
+npc guard_1 96 50 12 \
+    STATIC right \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@garinham_old_man \
+        1 == 1 1 @@garinham_guard_1
+
+npc guard_2 96 52 12 \
+    STATIC left \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@garinham_old_man \
+        1 == 1 1 @@garinham_guard_2
+
+
+; --- garin's grave ---
+; ---------------------
+
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+chest chest_1 95 10 gold_5_20 false
+chest chest_2 96 10 gold_6_13 false
+; herb item (id = 41)
+chest chest_3 97 10 41 false
+
+; cursed belt item (id = 60)
+chest chest_7 183 11 60 false
+
+; silver harp item (id = 53)
+chest chest_8 195 16 53 false
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} {map_id} \
+;          {player_col} {player_row} {player_direction} \
+;          {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;          {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;          {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_7 28 90 22 garinham 28 10 down default_sound true town false true false true
+
+;A
+teleport teleport_a 29 85 28 garinham 134 12 right default_sound true dungeon true true false false
+teleport teleport_a 28 133 12 garinham 84 28 left default_sound true dungeon true true false false
+
+;B
+teleport teleport_a 29 134 11 garinham 201 11 right default_sound true dungeon true true false false
+teleport teleport_a 28 200 11 garinham 133 11 left default_sound true dungeon true true false false
+
+;C
+teleport teleport_a 29 132 20 garinham 201 23 right default_sound true dungeon true true false false
+teleport teleport_a 28 200 23 garinham 131 20 left default_sound true dungeon true true false false
+
+;D
+teleport teleport_a 29 123 11 garinham 197 11 right default_sound true dungeon true true false false
+teleport teleport_a 28 196 11 garinham 122 11 left default_sound true dungeon true true false false
+
+;E
+teleport teleport_a 29 123 20 garinham 185 27 right default_sound true dungeon true true false false
+teleport teleport_a 28 184 27 garinham 122 20 left default_sound true dungeon true true false false
+
+;F
+teleport teleport_a 29 127 16 garinham 189 21 right default_sound true dungeon true true false false
+teleport teleport_a 28 188 21 garinham 126 16 left default_sound true dungeon true true false false
+
+;G
+teleport teleport_a 28 154 14 garinham 190 15 left default_sound true dungeon true true false false
+teleport teleport_a 29 191 15 garinham 155 14 right default_sound true dungeon true true false false
+
+;H
+teleport teleport_a 28 159 14 garinham 192 19 left default_sound true dungeon true true false false
+teleport teleport_a 29 193 19 garinham 160 14 right default_sound true dungeon true true false false
+

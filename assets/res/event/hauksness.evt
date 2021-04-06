@@ -1,0 +1,57 @@
+; --- hauksness ---
+; ------------------
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 22 22
+
+
+; axe knight - guards the erdrick's armor item (id = 22)
+; ---
+event erdricks_armor_guardian_enemy
+animation tileset 6 7 100
+create_animation static 1
+location 28 22  
+movement STATIC
+visible true
+blocked false
+fire_required false
+script
+    on_map_enter:
+            if ##player_armor_id "==" 22 "hide_event"
+            change_event_visibility "erdricks_armor_guardian_enemy" 1
+            ret
+        hide_event:
+            change_event_visibility "erdricks_armor_guardian_enemy" 0
+            ret
+
+    on_event_trigger:
+            ; player already has erdrick's armor ?
+            if ##player_armor_id "==" 22 "exit"
+            ; axe knight (id = 33)
+            ; start_battle {"battle_result_global_var"} {enemy_id} {tile_id} {player_cant_run->1=true|0=false} {enemy_will_not_run->1=true|0=false} {music_id}
+            ; return result = 0 -> player is dead
+            ;                 1 -> player battle win
+            ;                 2 -> player ran away
+            ;                 3 -> enemy ran away
+            start_battle "##battle_result" 33 0 0 1 "boss"
+            if ##battle_result "==" 0 "exit"
+            if ##battle_result "==" 1 "enemy_defeated"
+        enemy_not_defeated:
+            walk_event "player" "left"
+            ;walk_event "player" "stay"
+            change_player_animation "right"
+            goto "exit"
+        enemy_defeated:
+            trigger_event "item_erdricks_armor" "on_event_trigger"
+            goto "exit"
+        exit:
+            ret
+script_end
+event_end
+
+
+; item_on_ground {event_id} {pos_col} {pos_row} {item_id} {persistent->true/false}
+; ---
+; erdrick's armor item (id = 22)
+item_on_ground item_erdricks_armor 28 22 22 false

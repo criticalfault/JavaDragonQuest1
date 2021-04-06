@@ -1,0 +1,584 @@
+# https://strategywiki.org/wiki/Dragon_Warrior/Items_and_Equipment
+# http://www.realmofdarkness.net/dq/nes-dw-items/
+
+# note:
+# if max_count == 1 name.length = 9
+# if max_count >  1 name.length = 7
+
+# note 2:
+# use always 'dialog_show 0 0 "message"' to not block the UI for wait for key press in battle
+# when called from map (field), you need to call wait_for_fire_key manually
+
+# note 3: item is not consumed automatically when used. you have to consume manually calling the 'consume_item' command when necessary
+
+#      id   name                 buy   sell   atk  def  max_count  use_battle use_map  disposable  items_per_slot  immune_to_stop_spell  relieves_hurt   relieves_breath  protects_terrain  heal_per_step in milli
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# weapons
+# -------
+weapon 10,  Bamboo Pole      ,    10 ,    5 ,   2 ,  0 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+weapon 11,  Broad Sword      ,  1500 ,   20 ,  20 ,  0 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+weapon 12,  Club             ,    60 ,   30 ,   4 ,  0 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+weapon 13,  Copper Sword     ,   180 ,   90 ,  10 ,  0 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+weapon 14,  Erdrick's Sword  ,     0 ,    0 ,  40 ,  0 ,        1 ,     false , false ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+weapon 15,  Flame Sword      ,  9800 , 4900 ,  28 ,  0 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+weapon 16,  Hand Axe         ,   560 ,  280 ,  15 ,  0 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+
+    
+# armors
+# ------
+armor  20,  Chain Mail       ,   300 ,  150 ,   0 , 10 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+armor  21,  Clothes          ,    20 ,   10 ,   0 ,  2 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+armor  22,  Erdrick's Armor  ,     0 ,    0 ,   0 , 28 ,        1 ,     false , false ,     false ,             1 ,                true ,         true ,            true ,            true ,                 1000
+armor  23,  Full Plate       ,  3000 , 1500 ,   0 , 24 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+armor  24,  Half Plate       ,  1000 ,  500 ,   0 , 16 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+armor  25,  Leather Armor    ,    70 ,   35 ,   0 ,  4 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+armor  26,  Magic Armor      ,  7700 , 3850 ,   0 , 24 ,        1 ,     false , false ,      true ,             1 ,               false ,         true ,           false ,           false ,                  250
+
+
+# shields
+# -------
+shield 30,  Large Shield     ,   800 ,  400 ,   0 , 10 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+shield 31,  Silver Shield    , 14800 , 7400 ,   0 , 25 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+shield 32,  Small Shield     ,    90 ,   45 ,   0 ,  4 ,        1 ,     false , false ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+
+
+# purchasable items
+# -----------------
+
+# The Medicinal Herb restores 20 to 35 of your Hit Points.
+item   41,  Herb             ,    24 ,    6 ,   0 ,  0 ,        6 ,      true ,  true ,     false ,             6 ,               false ,        false ,           false ,           false ,                    0
+script
+    on_use_when_map:
+        sleep 500
+        heal_player 10 17
+        consume_item 41
+        show_dialog 0 1 @@item_herb_used
+        ; map: ret 0->use item and return to menu | 1->use item and exit menu
+        ret 1
+
+    on_use_when_battle:
+        sleep 500
+        heal_player 10 17
+        consume_item 41
+        show_dialog 0 0 @@item_herb_used
+        sleep 500
+        ; battle: ret 0->keep player turn | 1->pass the turn to enemy
+        ret 1
+script_end
+
+
+# The Wings of the Wyvern, thrown up into the air, will transport you home.
+# note: can't be used in dark places like dungeons
+item   42,  Wings            ,    70 ,   35 ,   0 ,  0 ,        6 ,     false ,  true ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            if ##current_map_is_dark "==" 1 "map_is_dark"
+        map_is_not_dark:
+            sleep 500
+            consume_item 42
+            show_dialog 0 0 @@item_wings_used
+            screen_flash 4 5 "0xffffff" 30
+            sleep 500
+            ; sound_id = 21 -> wings sound
+            play_sound 21
+            teleport "world" 46 47 "down" 1 "world" 0 0 0 1
+            ret 1
+        map_is_dark:
+            show_dialog 0 1 @@item_wings_cant_use
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+# Carry several to illuminate caves once you begin to travel.
+item   43,  Torch            ,     8 ,    4 ,   0 ,  0 ,        4 ,     false ,  true ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            if ##current_map_is_dark "!=" 1 "map_is_not_dark"
+        map_dark:
+            sleep 500
+            ; sound_id = 3 -> using torch sound
+            play_sound 3
+            player_use_torch_item
+            consume_item 43
+            ret 1
+        map_is_not_dark:
+            show_dialog 0 1 @@torch_only_dark_places
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+# The wearer of this scale receives an extra measure of protection (+2 defense).
+item   44,  Dragon's Scale   ,    20 ,   10 ,   0 ,  2 ,        6 ,     false ,  true ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+            ;@@item_dragon_scale_used_1 = $$player_name  donned the scale of the dragon.
+            ;@@item_dragon_scale_used_2 = Thou art already wearing the scale of the dragon.
+
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            if_set ##player_wearing_dragon_scale "already_wearing_dragon_scale"
+        not_wearing_dragon_scale:
+            set ##player_wearing_dragon_scale 1
+            add ##player_extra_def ##player_extra_def 2
+            show_dialog 0 1 @@item_dragon_scale_used_1
+            ret 1
+        already_wearing_dragon_scale:
+            show_dialog 0 1 @@item_dragon_scale_used_2
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+# A vial of the magical water keeps enemies at bay for a short time while you travel.	
+item   45,  Fairy Water      ,    38 ,   19 ,   0 ,  0 ,        5 ,     false ,  true ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+        set_player_repel_counter 128 "The Fairy Water"
+        show_dialog 0 1 @@item_fairy_water_used
+        ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+        ; this item can't be used in battle, so ret value is irrelevant
+        ret 1
+script_end
+
+
+# Locked doors can be opened only with these magic keys.
+item   46,  Magic Key        ,    53 ,   26 ,   0 ,  0 ,        6 ,     false ,  true ,     false ,             6 ,               false ,        false ,           false ,           false ,                    0
+# --- not used --- item  47,  Magic Key        ,    85 ,   26 ,   0 ,  0 ,        6 ,     false ,  true ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+# --- not used --- item  48,  Magic Key        ,    98 ,   26 ,   0 ,  0 ,        6 ,     false ,  true ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            div #player_col ##player_x 16
+            div #player_row ##player_y 16
+            ; log "before -> direction=" $$player_direction "|col=" #player_col "|row=" #player_row
+            if $$player_direction "==" "down" "player_direction_down"
+            if $$player_direction "==" "left" "player_direction_left"
+            if $$player_direction "==" "up" "player_direction_up"
+            if $$player_direction "==" "right" "player_direction_right"
+            goto "check_door"
+        player_direction_down:
+            add #player_row #player_row 1
+            goto "check_door"
+        player_direction_left:
+            sub #player_col #player_col 1
+            goto "check_door"
+        player_direction_up:
+            sub #player_row #player_row 1
+            goto "check_door"
+        player_direction_right:
+            add #player_col #player_col 1
+            goto "check_door"
+        check_door:
+            ; log "after -> direction=" $$player_direction "|col=" #player_col "|row=" #player_row
+            get_event #player_col #player_row "$$event_id" "$$event_type"
+            if $$event_type "!=" "door" "no_door_found"
+        door_ok:
+            ; this item is consumed by door on_event_trigger event
+            trigger_event $$event_id "on_event_trigger"
+            goto "when_map_exit"
+        no_door_found:
+            ; @@item_magic_key_failed = There is no door here.
+            show_dialog 0 1 @@item_magic_key_failed
+            goto "when_map_exit"
+        when_map_exit:
+            close_dialog
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+# Special Items
+
+# A powerful relic from an earlier time when the world was bright.
+item   50,  Ball of Light    ,     0 ,    0 ,   0 ,  0 ,        1 ,     false ,  true ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            set $$held_item_name "Ball of Light"
+            show_dialog 0 0 @@player_help_item
+            show_dialog 0 1 @@player_used_item_but_nothing_happened
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+# Hidden for ages, the tablet holds Erdrick's words of advice.
+# Note: in this game, you can't get this item
+item   51,  Erdrick's Tablet ,     0 ,    0 ,   0 ,  0 ,        1 ,     false , false ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+
+
+# The music of this instrument can cast certain evil beings (The Golem) into sleep.
+item   52,  Fairy Flute      ,     0 ,    0 ,   0 ,  0 ,        1 ,      true ,  true ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+    on_use_when_map:
+        show_dialog 0 0 @@item_fairy_flute_used
+        save_current_music
+        stop_music
+        sleep 500
+        ; fairy flute sound (id = 25)
+        play_sound 25
+        sleep 6000
+        restore_play_saved_music
+        show_dialog 0 1 @@player_used_item_but_nothing_happened
+        ; map: ret 0->use item and return to menu | 1->use item and exit menu
+        ret 1
+
+    on_use_when_battle:
+            show_dialog 0 0 @@item_fairy_flute_used
+            pause_music
+            sleep 500
+            ; fairy flute sound (id = 25)
+            play_sound 25
+            sleep 6000
+            resume_music
+            ; golem (id = 24)
+            if ##enemy_id "==" 24 "enemy_is_golem"
+        enemy_not_is_golem:
+            show_dialog 0 0 @@player_used_item_but_nothing_happened
+            goto "when_battle_exit"
+        enemy_is_golem:
+            sleep_enemy
+            show_dialog 0 0 @@item_fairy_flute_success
+            goto "when_battle_exit"
+        when_battle_exit:
+            sleep 500
+            ; battle: ret 0->keep turn | 1->pass turn to enemy
+            ret 1
+script_end
+
+
+# A dangerous item to obtain, but you must in order to complete the quest. Summons an enemy when used.
+# reference: https://www.youtube.com/watch?v=zVQzhRfJGok
+item   53,  Silver Harp      ,     0 ,    0 ,   0 ,  0 ,        1 ,      true ,  true ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+parent_items 54 58
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            show_dialog 0 0 @@item_silver_harp_used
+            save_current_music
+            stop_music
+            sleep 500
+            ; silver harp sound (id = 24)
+            play_sound 24
+            sleep 5750
+            restore_play_saved_music
+            ; --- if $$current_map_id "!=" "world" "nothing_happened"
+            if ##player_can_encounter_enemy "==" 0 "nothing_happened"
+        invoke_enemy:
+            close_dialog
+            invoke_local_enemy
+            goto "when_map_exit"
+        nothing_happened:
+            show_dialog 0 1 @@player_used_item_but_nothing_happened
+            goto "when_map_exit"
+        when_map_exit:
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+        show_dialog 0 0 @@item_silver_harp_used
+        pause_music
+        sleep 500
+        ; silver harp sound (id = 24)
+        play_sound 24
+        sleep 5750
+        resume_music
+        sleep 500
+        show_dialog 0 0 @@item_silver_harp_result_when_battle
+        ret 1
+script_end
+
+
+# The magic of this item is not at first clear. Listen to clues to understand.
+item   54,  Staff of Rain    ,     0 ,    0 ,   0 ,  0 ,        1 ,     false ,  true ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+parent_items 58
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            set $$held_item_name "Staff of Rain"
+            show_dialog 0 0 @@player_help_item
+            show_dialog 0 1 @@player_used_item_but_nothing_happened
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+# When paired with the Staff of Rain a potent magic is unleashed.
+item   55,  Stone of Sunlight,     0 ,    0 ,   0 ,  0 ,        1 ,     false ,  true ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+parent_items 58
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            set $$held_item_name "Stone of Sunlight"
+            show_dialog 0 0 @@player_help_item
+            show_dialog 0 1 @@player_used_item_but_nothing_happened
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+# You must have some direction to your quest. Gwaelin's love is your compass.
+item   56,  Gwaelin's Love   ,     0 ,    0 ,   0 ,  0 ,        1 ,     false ,  true ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            if ##player_lv ">=" ##player_last_lv "player_already_last_level"
+        player_can_be_still_stronger:
+            ;@@item_gwaelins_love_used_1 = Heed my voice,
+            ;@@item_gwaelins_love_used_2 = $$player_name , for this is Gwaelin. | To reach the next level thou must raise thy Experience Points by ##player_xp_for_next_lv . | My hope is with thee.
+            show_dialog 0 0 @@item_gwaelins_love_used_1
+            show_dialog 1 2 @@item_gwaelins_love_used_2
+            goto "check_castle_location"
+        player_already_last_level:
+            ;@@item_gwaelins_love_used_5 = $$player_name ? | This is Gwaelin. | Know that thou hath reached the final level.
+            show_dialog 1 2 @@item_gwaelins_love_used_5
+            goto "check_castle_location"
+        check_castle_location:
+            ;@@item_gwaelins_love_used_3 = From where thou art now, my castle lies ##castle_ns_distance  to the $$castle_ns  and ##castle_we_distance  to the $$castle_we .
+            ;@@item_gwaelins_love_used_4 = I love thee, $$player_name .
+            if $$current_map_id "==" "world" "inform_castle_location"
+            goto "exit"
+        inform_castle_location:
+            div #player_row ##player_y 16
+            sub ##castle_ns_distance 47 #player_row
+            if ##castle_ns_distance ">" 0 "castle_south"
+            if ##castle_ns_distance "<" 0 "castle_north"
+        castle_north:
+            mul ##castle_ns_distance ##castle_ns_distance -1
+            set $$castle_ns "north" 
+            goto "castle_we"
+        castle_south:
+            set $$castle_ns "south" 
+            goto "castle_we"
+        castle_we:
+            div #player_col ##player_x 16
+            sub ##castle_we_distance 47 #player_col
+            if ##castle_we_distance ">" 0 "castle_east"
+            if ##castle_we_distance "<" 0 "castle_west"
+        castle_west:
+            mul ##castle_we_distance ##castle_we_distance -1
+            set $$castle_we "west"
+            goto "castle_show_location"
+        castle_east:
+            set $$castle_we "east"
+            goto "castle_show_location"
+        castle_show_location:
+            show_dialog 1 2 @@item_gwaelins_love_used_3
+            goto "exit"
+        exit:
+            show_dialog 1 1 @@item_gwaelins_love_used_4
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+        ; this item can't be used in battle, so ret value is irrelevant
+        ret 1
+script_end
+
+
+# The warrior who discovers this object thereby proves his heritage.
+item   57,  Erdrick's Token  ,     0 ,    0 ,   0 ,  0 ,        1 ,     false ,  true ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+parent_items 58
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            set $$held_item_name "Erdrick's Token"
+            show_dialog 0 0 @@player_help_item
+            show_dialog 0 1 @@player_used_item_but_nothing_happened
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+# He who carries the Rainbow Drop may reach an island without a ship.
+item   58,  Rainbow Drop     ,     0 ,    0 ,   0 ,  0 ,        1 ,     false ,  true ,     false ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            show_dialog 0 2 @@item_rainbow_drop_used
+            if_set ##rainbow_drop_bridge_created "no_rainbow_appeared"
+            if ##player_x "!=" 1104 "no_rainbow_appeared"
+            if ##player_y "!=" 848 "no_rainbow_appeared"
+        player_position_ok:    
+            save_current_music
+            stop_music
+            hide_player_simplified_status
+            close_dialog
+            sleep 500
+            ; rainbow bridge (id = 27)
+            play_sound 27
+            set #layer 4
+            set #count 6
+        loop_effect:
+            screen_clear #layer "0xff000080"
+            sleep 100
+            screen_clear #layer "0xffff0080"
+            sleep 100
+            screen_clear #layer "0x00ff0080"
+            sleep 100
+            screen_clear #layer "0x00ffff80"
+            sleep 100
+            screen_clear #layer "0x0000ff80"
+            sleep 100
+            screen_clear #layer "0xff00ff80"
+            sleep 100
+            sub #count #count 1
+            if #count ">" 0 "loop_effect"
+            screen_clear #layer "0x00000000"
+            sleep 500
+            restore_play_saved_music
+            change_tile 68 53 9
+            set ##rainbow_drop_bridge_created 1
+            ret 1
+        no_rainbow_appeared:    
+            show_dialog 0 1 @@item_rainbow_drop_failed
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+# Cursed Items
+# ------------
+
+# Not all treasure is good. This belt will squeeze you like a vise. Don't put it on; just take it and sell it. If you wear it anyway, you cannot enter Catle Tantegel (or get expelled immediately if revived) and sometimes miss turns during combat. To remove the curse, speak with the old man in Brecconary Town to remove the items.
+item   60,  Cursed Belt      ,     0 ,  180 ,   0 ,  0 ,        1 ,     false ,  true ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+    ; reference: https://www.youtube.com/watch?v=MN8FJvfadFM
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_map:
+            set $$cursed_item_name "Cursed Belt"
+            has_player_specific_curse "##has_curse" 60
+            if ##has_curse "==" 1 "already_cursed"
+        not_cursed_yet:
+            add_player_curse 60
+            show_dialog 0 2 @@cursed_item_1
+            show_dialog 0 0 @@cursed_item_2
+            goto "when_map_exit"
+        already_cursed:
+            show_dialog 0 0 @@cursed_item_3
+            goto "when_map_exit"
+        when_map_exit:
+            save_current_music
+            stop_music
+            sleep 500
+            ; sound_id = 26 -> cursed sound
+            play_sound 26
+            sleep 3000
+            restore_play_saved_music
+            wait_for_any_key
+            ret 1 
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+# Buried and difficult to find, the evil necklace will bring a good price at a tool shop.
+item   61,  Death Necklace   ,     0 , 1200 ,   0 ,  0 ,        1 ,     false ,  true ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+    ; reference: https://www.youtube.com/watch?v=MN8FJvfadFM
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    ;    map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            set $$cursed_item_name "Death Necklace"
+            has_player_specific_curse "##has_curse" 61
+            if ##has_curse "==" 1 "already_cursed"
+        not_cursed_yet:
+            add_player_curse 61
+            show_dialog 0 2 @@cursed_item_1
+            show_dialog 0 0 @@cursed_item_2
+            goto "when_map_exit"
+        already_cursed:
+            show_dialog 0 0 @@cursed_item_3
+            goto "when_map_exit"
+        when_map_exit:
+            save_current_music
+            stop_music
+            sleep 500
+            ; sound_id = 26 -> cursed sound
+            play_sound 26
+            sleep 3000
+            restore_play_saved_music
+            wait_for_any_key
+            ret 1 
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+# Other Items
+# -----------
+
+# Due to misprogramming, the ring does nothing. It's otherwise claimed to increase your fighting ability (most common claims being +2 attack or increasing critical hit chance.)
+# Note: in this implementation, player will receive +2 attack.
+item   70,  Fighter's Ring   ,     0 ,   15 ,   0 ,  0 ,        1 ,     false ,  true ,      true ,             1 ,               false ,        false ,           false ,           false ,                    0
+script
+            ;@@item_fighters_ring_used_1 = $$player_name  put on the Fighter's Ring.
+            ;@@item_fighters_ring_used_2 = $$player_name  adjusted the position of the Fighter's Ring.
+
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            set_if_not_exist ##player_put_fighters_ring 0
+            if ##player_put_fighters_ring "==" 1 "already_put_fighters_ring"
+        no_fighters_ring_yet:
+            set ##player_put_fighters_ring 1
+            add ##player_extra_atk ##player_extra_atk 2
+            show_dialog 0 1 @@item_fighters_ring_used_1
+            ret 1
+        already_put_fighters_ring:
+            show_dialog 0 1 @@item_fighters_ring_used_2
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end

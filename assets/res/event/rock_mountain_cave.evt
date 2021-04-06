@@ -1,0 +1,40 @@
+; --- rock mountain cave --- 
+; --------------------------
+
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 20 15
+
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+; herb (id = 41)
+chest chest_1 25 17 41 false
+
+; fighter's ring (id = 70)
+chest chest_2 52 14 70 false
+
+; torch (id = 43)
+chest chest_3 53 14 43 false
+
+; death's necklace (id = 61)
+chest chest_4 51 18 61 true
+
+; gold 10~17
+chest chest_5 60 21 gold_10_17 false
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} {map_id} \
+;         {player_col} {player_row} {player_direction} \
+;         {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;         {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;         {resetRepel->true|false]
+; ---
+teleport teleport_1 28 12 19 world 33 61 down default_sound true world false false false true
+teleport teleport_2 29 11 12 rock_mountain_cave 51 12 right default_sound true dungeon true true false false
+teleport teleport_3 29 18 17 rock_mountain_cave 57 17 right default_sound true dungeon true true false false
+teleport teleport_4 29 24 24 rock_mountain_cave 63 24 right default_sound true dungeon true true false false
+teleport teleport_5 28 50 12 rock_mountain_cave 12 12 right default_sound true dungeon true true false false
+teleport teleport_6 28 56 17 rock_mountain_cave 19 17 right default_sound true dungeon true true false false
+teleport teleport_7 28 62 24 rock_mountain_cave 23 24 left default_sound true dungeon true true false false

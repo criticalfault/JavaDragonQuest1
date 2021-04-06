@@ -1,0 +1,539 @@
+; --- charlock castle ---
+; -----------------------
+
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 19 26
+save_point save_point_2 294 36
+
+
+;door {event_name} {sprite_id} {pos_col} {pos_row} {persistent}
+;---
+door door_1 22 16 20 false
+door door_2 22 27 20 false
+door door_3 22 286 23 false
+
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+; erdrick's sword (id = 14)
+chest chest_1 105 17 14 false
+
+; herb (id = 41)
+chest chest_2 280 22 41 false
+
+; gold 500~755
+chest chest_3 280 23 gold_500_755 false
+
+; magic key (id = 46)
+chest chest_4 281 23 46 false
+
+; wings (id = 42)
+chest chest_5 280 24 42 false
+
+; cursed belt (id = 60)
+chest chest_6 281 24 60 false
+
+; herb (id = 41)
+chest chest_7 282 24 41 false
+
+
+; reference: https://www.youtube.com/watch?v=EdscjaKjqxA&t=86s
+; shows a tip for the player that behind the throne there is a secret passage
+; ---
+event throne_tip
+animation tileset 6 7 100
+create_animation static 41
+location 22 15  
+movement STATIC
+visible true
+blocked false
+fire_required true
+script
+    on_map_enter:
+            if_set ##throne_secret_passage_found "secret_passage_found"
+        secret_passage_not_found:    
+            change_event_visibility "throne_tip" 1
+            ret
+        secret_passage_found:
+            change_event_visibility "throne_tip" 0
+            ret
+
+    on_event_trigger:
+            show_dialog 0 2 @@item_on_ground
+            show_dialog 0 1 @@charlock_castle_throne_1
+            close_dialog
+            ret
+script_end
+event_end
+
+
+; reference: https://www.youtube.com/watch?v=EdscjaKjqxA&t=83s
+; secret passage behind the throne
+; ---
+event throne_secret_passage
+animation tileset 6 7 100
+create_animation static 41
+location 22 13  
+movement STATIC
+visible true
+blocked false
+fire_required true
+script
+    on_map_enter:
+            if_set ##throne_secret_passage_found "secret_passage_found"
+        secret_passage_not_found:    
+            change_event_visibility "teleport_a_1" 0
+            change_event_visibility "throne_secret_passage" 1
+            ret
+        secret_passage_found:
+            change_event_visibility "teleport_a_1" 1
+            change_event_visibility "throne_secret_passage" 0
+            ret
+
+    on_event_trigger:
+            show_dialog 0 2 @@item_on_ground
+            show_dialog 0 0 @@charlock_castle_throne_2
+            walk_event "player" "left"
+            walk_event "player" "stay"
+            change_player_animation "right"
+            set ##throne_secret_passage_found 1
+            change_event_visibility "teleport_a_1" 1
+            change_event_visibility "throne_secret_passage" 0
+            force_redraw
+            wait_for_any_key
+            close_dialog
+            ret
+script_end
+event_end
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} \
+;         {map_id} {player_col} {player_row} {player_direction} \
+;         {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;         {musicId} {isDark->true|false} {repelHasNoEffect->true|false} ;
+;         {resetRepel->true|false} {resetLight->true|false}
+;---
+
+; reference: https://www.youtube.com/watch?v=EdscjaKjqxA&t=83s
+; this stair is hidden by 'throne_secret_passage' event
+teleport teleport_a_1 29 22 13 \
+         charlock_castle 65 13 down \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_b_1 29 16 26 \
+         charlock_castle 65 25 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_c_1 29 27 26 \
+         charlock_castle 74 27 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_a_2 28 65 12 \
+         charlock_castle 21 13 left \
+         default_sound true \
+         dungeon false true \
+         false false
+
+teleport teleport_b_2 28 64 25 \
+         charlock_castle 16 25 up \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_c_2 28 73 27 \
+         charlock_castle 27 25 up \
+         default_sound true \
+         dungeon true true \
+         false false
+
+; ---
+
+teleport teleport_d_1 29 71 13 \
+         charlock_castle 109 12 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_e_1 29 58 16 \
+         charlock_castle 100 12 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_f_1 29 69 19 \
+         charlock_castle 105 16 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_g_1 29 75 19 \
+         charlock_castle 109 21 down \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_h_1 29 70 21 \
+         charlock_castle 109 21 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_i_1 29 58 26 \
+         charlock_castle 100 12 up \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_j_1 29 64 31 \
+         charlock_castle 106 12 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_d_2 28 108 12 \
+         charlock_castle 71 12 up \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_e_2 28 99 12 \
+         charlock_castle 58 15 up \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_f_2 28 104 16 \
+         charlock_castle 69 18 up \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_g_2 28 109 20 \
+         charlock_castle 75 18 up \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_h_2 28 108 21 \
+         charlock_castle 70 22 down \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_i_2 28 100 13 \
+         charlock_castle 58 25 up \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_j_2 28 105 12 \
+         charlock_castle 63 31 left \
+         default_sound true \
+         dungeon true true \
+         false false
+
+; ---
+
+teleport teleport_k_1 29 103 12 \
+         charlock_castle 142 12 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_l_1 29 109 13 \
+         charlock_castle 136 15 down \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_m_1 29 100 20 \
+         charlock_castle 140 16 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_n_1 29 101 21 \
+         charlock_castle 135 21 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_k_2 28 141 12 \
+         charlock_castle 103 13 down \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_l_2 28 136 14 \
+         charlock_castle 109 12 up \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_m_2 28 139 16 \
+         charlock_castle 100 21 down \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_n_2 28 134 21 \
+         charlock_castle 100 21 left \
+         default_sound true \
+         dungeon true true \
+         false false
+
+; ---
+
+teleport teleport_o_1 29 135 18 \
+         charlock_castle 169 21 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_p_1 29 141 19 \
+         charlock_castle 175 18 up \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_o_2 28 168 21 \
+         charlock_castle 134 18 left \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_p_2 28 175 19 \
+         charlock_castle 140 19 left \
+         default_sound true \
+         dungeon true true \
+         false false
+
+; ---
+
+teleport teleport_q_1 29 176 13 \
+         charlock_castle 207 12 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_r_1 29 170 14 \
+         charlock_castle 211 13 down \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_q_2 28 206 12 \
+         charlock_castle 175 13 left \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_r_2 28 211 12 \
+         charlock_castle 171 14 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+; ---
+
+teleport teleport_s_1 29 202 12 \
+         charlock_castle 237 18 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_t_1 29 207 17 \
+         charlock_castle 237 12 down \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_s_2 28 236 18 \
+         charlock_castle 202 13 down \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_t_2 28 236 12 \
+         charlock_castle 206 17 left \
+         default_sound true \
+         dungeon true true \
+         false false
+
+; ---
+
+teleport teleport_u_1 29 245 18 \
+         charlock_castle 279 39 up \
+         default_sound true \
+         dungeon false true \
+         false false
+
+teleport teleport_v_1 29 245 12 \
+         charlock_castle 237 12 right \
+         default_sound true \
+         dungeon true true \
+         false false
+
+teleport teleport_u_2 28 279 40 \
+         charlock_castle 244 18 left \
+         default_sound true \
+         dungeon true true \
+         false false
+
+
+;npc {event_id} {sprite_start_id} {pos_col} {pos_row} \
+;    STATIC {sprite_direction} | RANDOM {rect_col} {rect_row} {rect_width} {rect_height} \
+;    {texts_global_var_0} ... {texts_global_var_n} | conditional_msgs \
+;       {var_a} {comparisson_operator} {var_b} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;       {var_c} {comparisson_operator} {var_d} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;       {var_e} {comparisson_operator} options 2 (no. of options) 2 (default start option [not implemented!]) 0 (cancel_option / -1 will force to choose one of options) \
+;          {yes_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;          {no_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+; ---
+;    sprite_start_id  description
+; 0                0  hero
+; 1                8  boy
+; 2               16  hero
+; 3               24  girl
+; 4               32  hero
+; 5               40  old_man
+; 6               48  hero
+; 7               56  merchant
+; 8               64  hero_princess
+; 9               72  warrior
+;10               80  princess
+;11               88  dragon_lord
+;12               96  guard
+;13              104  guard_bugle
+;14              106  king
+; ---
+
+;TODO
+;npc dragon_lord 88 285 35 \
+;    STATIC down \
+;    conditional_msgs \
+;        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+;        ; ##game_state_princess_rescued == 1 1 @@empty \
+;        1 == 1 1 "FINAL_BOSS_FIGHT!"
+
+; dragon lord - last boss
+; ---
+event dragon_lord
+animation chars 16 8 100
+create_animation left 90 91
+create_animation up 92 93
+create_animation right 94 95
+create_animation down 88 89
+location 285 35
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_map_enter:
+            if ##game_state_dragon_lord_defeated ">" 0 "hide_event"
+            change_event_visibility "dragon_lord" 1
+            ret
+        hide_event:
+            change_event_visibility "dragon_lord" 0
+            ret
+
+    on_event_trigger:
+            show_player_simplified_status
+            change_event_turn_to_player "dragon_lord"
+            force_redraw
+            ;@@charlock_castle_dragon_lord_1 = Welcome, $$player_name . | I am the Dragonlord--King of Kings.
+            ;@@charlock_castle_dragon_lord_2 = I have been waiting long for one such as thee.
+            ;@@charlock_castle_dragon_lord_3 = I give thee now a chance to share this world and to rule half of it if thou will now stand beside me.
+            ;@@charlock_castle_dragon_lord_4 = What sayest thou? | Will the great warrior stand with me?
+            ;@@charlock_castle_dragon_lord_4_no = Thou art a fool!
+            ;@@charlock_castle_dragon_lord_4_yes_a = Really? 
+            ;@@charlock_castle_dragon_lord_4_yes_b = Then half of this world is thine, half of the darkness, and....
+            ;@@charlock_castle_dragon_lord_4_yes_c = If thou dies I can bring thee back for another attempt without loss of thy deeds to date.
+            ;@@charlock_castle_dragon_lord_4_yes_d = | Thy journey is over. | Take now a long, long rest. | Hahahaha....
+            ;@@charlock_castle_dragon_lord_5 = The Dragonlord revealed his true self!
+            ;@@charlock_castle_dragon_lord_6 = Thou hast found the Ball of Light.
+            ;@@charlock_castle_dragon_lord_7 = | Radiance streams forth as thy hands touch the object and hold it aloft.
+            ;@@charlock_castle_dragon_lord_8 = | Across the land spreads the brilliance until all shadows are banished and peace is restored.
+            show_dialog 1 2 @@charlock_castle_dragon_lord_1
+            show_dialog 1 2 @@charlock_castle_dragon_lord_2
+            show_dialog 1 2 @@charlock_castle_dragon_lord_3
+            show_dialog 1 0 @@charlock_castle_dragon_lord_4
+            ; ask player if want to cooperate with dragon lord
+            sleep 250
+            if_option_menu_select 9 3 2 @@option_yes @@option_no "yes_label" "no_label" "no_label"
+        yes_label:
+                show_dialog 1 0 @@charlock_castle_dragon_lord_4_yes_a
+                sleep 250
+                if_option_menu_select 9 3 2 @@option_yes @@option_no "yes_label_2" "no_label" "no_label"
+            yes_label_2:
+                show_dialog 1 2 @@charlock_castle_dragon_lord_4_yes_b
+                show_dialog 1 2 @@charlock_castle_dragon_lord_4_yes_c
+                show_dialog 0 0 @@charlock_castle_dragon_lord_4_yes_d
+                screen_fill 4 "0xff000080"
+            halt:    
+                screen_refresh
+                sleep 100
+                goto "halt"
+
+        no_label:
+            show_dialog 1 0 @@charlock_castle_dragon_lord_4_no
+            sleep 1000
+            close_dialog
+            ; start_battle {"battle_result_global_var"} {enemy_id} {tile_id} {player_cant_run->1=true|0=false} {enemy_will_not_run->1=true|0=false} {music_id}
+            ; return result = 0 -> player is dead
+            ;                 1 -> player battle win
+            ;                 2 -> player ran away
+            ;                 3 -> enemy ran away
+            ; dragon lord 1 (id = 38)
+            start_battle "##battle_result" 38 32 0 1 "battle"
+            if ##battle_result "==" 0 "exit"
+            if ##battle_result "==" 1 "enemy_defeated_1"
+        enemy_not_defeated:
+            change_event_animation "dragon_lord" "down"
+            goto "exit"
+        enemy_defeated_1:
+            show_dialog 0 0 @@charlock_castle_dragon_lord_5
+            sleep 500
+            close_dialog
+            ; dragon lord 2 (id = 39)
+            start_battle "##battle_result" 39 32 0 1 "boss"
+            if ##battle_result "==" 0 "exit"
+            if ##battle_result "==" 1 "enemy_defeated_2"
+            goto "enemy_not_defeated" 
+        enemy_defeated_2:
+                set ##game_state_dragon_lord_defeated 1
+
+                set #disappearance_counter 10
+            blink_dragon_lord:    
+                change_event_visibility "dragon_lord" 1
+                force_redraw
+                sleep 50
+                change_event_visibility "dragon_lord" 0
+                force_redraw
+                sleep 50
+                sub #disappearance_counter #disappearance_counter 1
+                if #disappearance_counter ">" 0 "blink_dragon_lord"
+
+                ; ball of light item (id = 50)
+                add_inventory_item 50
+                set ##battle_enabled 0
+                show_dialog 0 2 @@charlock_castle_dragon_lord_6
+                show_dialog 0 2 @@charlock_castle_dragon_lord_7
+                show_dialog 0 1 @@charlock_castle_dragon_lord_8
+                teleport "world" 52 52 "down" 1 "world" 0 0 0 1
+                goto "exit"
+        exit:
+            hide_player_simplified_status
+            close_dialog
+            ret
+script_end
+event_end

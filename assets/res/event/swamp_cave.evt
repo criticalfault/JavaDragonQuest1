@@ -1,0 +1,145 @@
+; --- swamp cave --- 
+; ------------------
+
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 15 23
+
+
+; door {event_name} {sprite_id} {pos_col} {pos_row} {persistent}
+; note: the door that keeps the princess is not persistent.
+;       if you leave the cave, it will appear again.
+;---
+door door_1 22 17 32 false
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} \
+;         {map_id} {player_col} {player_row} {player_direction} \
+;         {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;         {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;         {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_1 28 11 12 \
+         world 108 48 up \
+         default_sound true \
+         world false false \
+         false true
+
+teleport teleport_2 28 12 41 \
+         world 108 53 down \
+         default_sound true \
+         world false false \
+         false true
+
+
+; green dragon - princess guardian enemy TODO
+; note: it's necessary to defeat the green dragon just once. if you leave
+;       the cave and enter again, the dragon will not appear again.
+; ---
+event princess_guardian_enemy
+animation tileset 6 7 100
+create_animation static 32
+location 16 26  
+movement STATIC
+visible true
+blocked false
+fire_required false
+script
+    on_map_enter:
+            if ##game_state_dragon_lord_defeated "!=" 0 "hide_event"
+            if_set ##princess_guardian_enemy_defeated "hide_event"
+            change_event_visibility "princess_guardian_enemy" 1
+            ret
+        hide_event:
+            change_event_visibility "princess_guardian_enemy" 0
+            ret
+
+    on_event_trigger:
+            if_set ##princess_guardian_enemy_defeated "exit"
+            ; green dragon (id = 30)
+            ; start_battle {"battle_result_global_var"} {enemy_id} {tile_id} {player_cant_run->1=true|0=false} {enemy_will_not_run->1=true|0=false} {music_id}
+            ; return result = 0 -> player is dead
+            ;                 1 -> player battle win
+            ;                 2 -> player ran away
+            ;                 3 -> enemy ran away
+            start_battle "##battle_result" 30 32 0 1 "boss"
+            if ##battle_result "==" 0 "exit"
+            if ##battle_result "==" 1 "enemy_defeated"
+        enemy_not_defeated:
+            walk_event "player" "up"
+            ;walk_event "player" "stay"
+            change_player_animation "down"
+            goto "exit"
+        enemy_defeated:
+            set ##princess_guardian_enemy_defeated 1
+            goto "exit"
+        exit:
+            ret
+script_end
+event_end
+
+
+; princess
+; ---
+event princess
+animation chars 16 8 100
+create_animation left 82 83
+create_animation up 84 85
+create_animation right 86 87
+create_animation down 80 81
+location 17 30  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_map_enter:
+            if ##game_state_princess_rescued ">" 0 "hide_event"
+            change_event_animation "princess" "down"
+            change_event_visibility "princess" 1
+            ret
+        hide_event:
+            change_event_visibility "princess" 0
+            ret
+
+    on_event_trigger:
+            ;@@swamp_cave_princess_1 = Thou art brave indeed to rescue me, $$player_name .
+            ;@@swamp_cave_princess_2 = I am Gwaelin, daughter of Lorik.
+            ;@@swamp_cave_princess_3 = Will thou take me to the castle?
+            ;@@swamp_cave_princess_3_no = But thou must.
+            ;@@swamp_cave_princess_3_yes = | Princess Gwaelin embraces thee.
+            ;@@swamp_cave_princess_4 = I'm so happy!
+            show_player_simplified_status
+            change_event_turn_to_player "princess"
+            force_redraw
+            show_dialog 1 2 @@swamp_cave_princess_1
+            show_dialog 1 2 @@swamp_cave_princess_2
+        ask_again:
+            show_dialog 1 0 @@swamp_cave_princess_3
+            sleep 250
+            if_option_menu_select 9 3 2 @@option_yes @@option_no "yes_label" "no_label" "no_label"
+        yes_label:
+            show_dialog 0 0 @@swamp_cave_princess_3_yes
+            save_current_music
+            stop_music
+            set ##game_state_princess_rescued 1
+            change_event_visibility "princess" 0
+            set_player_state "princess"
+            change_player_animation $$player_direction
+            force_redraw
+            ; princess rescued sound (id = 28)
+            play_sound 28
+            sleep 7000
+            restore_play_saved_music
+            show_dialog 1 1 @@swamp_cave_princess_4
+            goto "exit"
+        no_label:
+            show_dialog 1 2 @@swamp_cave_princess_3_no
+            goto "ask_again"
+        exit:
+            hide_player_simplified_status
+            close_dialog
+            ret
+script_end
+event_end

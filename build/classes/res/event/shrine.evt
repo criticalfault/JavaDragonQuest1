@@ -1,0 +1,186 @@
+--- northern shrine ---
+-----------------------
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 13 12
+
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+; staff of rain (id = 54)
+chest chest_1 15 16 54 false
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} \
+;         {map_id} {player_col} {player_row} {player_direction} \
+;         {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;         {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;         {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_1 28 16 21 \
+         world 85 5 down \
+         default_sound true \
+         world false false \
+         false true
+
+
+; northern shrine old man
+; ---
+event northern_shrine_old_man
+animation chars 16 8 100
+create_animation down 40 41
+create_animation left 42 43
+create_animation up 44 45
+create_animation right 46 47
+location 16 16  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_map_enter:
+        ; if player saved game before taking the chest
+        if_set #talked_after_bring_silver_harp "waiting_for_take_item"
+            change_event_location "northern_shrine_old_man" 16 16
+            change_event_animation "northern_shrine_old_man" "right"
+            ret
+        waiting_for_take_item:
+            change_event_location "northern_shrine_old_man" 16 15
+            change_event_animation "northern_shrine_old_man" "down"
+            ret
+
+    on_event_trigger:
+            ;@@northern_shrine_old_man_1 = Thy bravery must be proven.
+            ;@@northern_shrine_old_man_2 = Thus, I propose a test.
+            ;@@northern_shrine_old_man_3 = There is a Silver Harp that beckons to the creatures of the Dragonlord.
+            ;@@northern_shrine_old_man_4 = Bring this to me and I will reward thee with the Staff of Rain.
+            ;@@northern_shrine_old_man_5 = Thou hast brought the harp. Good.
+            ;@@northern_shrine_old_man_6 = I have been waiting long for one such as thee.
+            ;@@northern_shrine_old_man_7 = Take the Treasure Chest.
+            ;@@northern_shrine_old_man_8 = Thou hast no business here. | Go away.
+            change_event_turn_to_player "northern_shrine_old_man"
+            force_redraw
+            ; rainbow drop item item (id = 58)
+            if ##player_item_58 ">" 0 "player_has_staff_of_rain"
+            ; staff of rain item (id = 54)
+            if ##player_item_54 ">" 0 "player_has_staff_of_rain"
+            if_set #talked_after_bring_silver_harp "just_take_the_item"
+            ; silver harp item (id = 53)
+            if ##player_item_53 ">" 0 "player_has_silver_harp"
+        player_without_silver_harp:    
+            show_dialog 1 2 @@northern_shrine_old_man_1
+            show_dialog 1 2 @@northern_shrine_old_man_2
+            show_dialog 1 2 @@northern_shrine_old_man_3
+            show_dialog 1 1 @@northern_shrine_old_man_4
+            goto "exit"
+        player_has_silver_harp:    
+            set #talked_after_bring_silver_harp 1
+            ; silver harp item (id = 53)
+            drop_item 53
+            show_dialog 1 2 @@northern_shrine_old_man_5
+            show_dialog 1 2 @@northern_shrine_old_man_6
+            show_dialog 1 2 @@northern_shrine_old_man_7
+            close_dialog
+            walk_event "northern_shrine_old_man" "stay"
+            walk_event "northern_shrine_old_man" "up"
+            change_event_animation "northern_shrine_old_man" "down"
+            walk_event "northern_shrine_old_man" "stay"
+            force_redraw
+            goto "exit"
+        just_take_the_item:
+            show_dialog 1 1 @@northern_shrine_old_man_7
+            change_event_animation "northern_shrine_old_man" "down"
+            goto "exit"
+        player_has_staff_of_rain:
+                show_dialog 1 1 @@northern_shrine_old_man_8
+                if_set #talked_after_bring_silver_harp "player_has_staff_of_rain_exit_down"
+            player_has_staff_of_rain_exit_right:
+                change_event_animation "northern_shrine_old_man" "right"
+                goto "exit"
+            player_has_staff_of_rain_exit_down:
+                change_event_animation "northern_shrine_old_man" "down"
+                goto "exit"
+        exit:
+            close_dialog
+            ret
+script_end
+event_end
+
+
+--- southern shrine ---
+-----------------------
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 51 19
+
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+; rainbow drop (id = 58)
+chest chest_1 51 17 58 false
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} \
+;         {map_id} {player_col} {player_row} {player_direction} \
+;         {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;         {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;         {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_2 28 46 16 \
+         world 112 113 down \
+         default_sound true \
+         world false false \
+         false true
+
+
+; southern shrine old man
+; ---
+event southern_shrine_old_man
+animation chars 16 8 100
+create_animation left 42 43
+location 50 17  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_event_trigger:
+            ;@@southern_shrine_old_man_1 = In thy task thou hast failed. Alas, I fear thou art not the one Erdrick predicted would save us.
+            ;@@southern_shrine_old_man_2 = Go now!
+            ;@@southern_shrine_old_man_3 = Now the sun and rain shall meet and the Rainbow Drop passes to thy keeping.
+            ;@@southern_shrine_old_man_4 = Thou hast no business here. | Go away.
+            ; rainbow drop item (id = 58)   
+            if ##player_item_58 ">" 0 "player_already_has_rainbow_drop"
+            ; staff of rain item (id = 54)
+            if ##player_item_54 "==" 0 "player_has_not_all_items"
+            ; stone of sunlight (id = 55)
+            if ##player_item_55 "==" 0 "player_has_not_all_items"
+            ; erdrick's token (id = 57)
+            if ##player_item_57 "==" 0 "player_has_not_all_items"
+        player_has_all_items:    
+            drop_item 54
+            drop_item 55
+            ; note: erdrick's token item (id = 57) is not removed from player
+            add_inventory_item 58
+            show_dialog 1 0 @@southern_shrine_old_man_3
+            sleep 500
+            screen_flash 2 10 "0xffff00" 30
+            wait_for_any_key
+            close_dialog
+            ret
+        player_has_not_all_items:    
+            show_dialog 1 2 @@southern_shrine_old_man_1
+            show_dialog 1 0 @@southern_shrine_old_man_2
+            sleep 500
+            screen_flash 2 5 "0xffffff" 30
+            close_dialog
+            teleport "world" 112 113 "down" 1 "world" 0 0 0 1
+            ret
+        player_already_has_rainbow_drop:
+            show_dialog 1 1 @@southern_shrine_old_man_4
+            close_dialog
+            ret
+script_end
+event_end

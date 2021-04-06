@@ -1,0 +1,638 @@
+; --- cantlin ---
+; ---------------
+
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 23 13
+
+
+;door {event_name} {sprite_id} {pos_col} {pos_row} {persistent}
+;---
+door door_1 22 15 32 false
+door door_2 22 19 36 false
+door door_3 22 25 36 false
+door door_4 22 26 36 false
+door door_5 22 37 20 false
+
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+chest chest_1 13 38 gold_0 false
+chest chest_2 38 36 gold_0 false
+chest chest_3 38 38 gold_0 false
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} \
+;         {map_id} {player_col} {player_row} {player_direction} \
+;         {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;         {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;         {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_1_a 31 13 13 \
+         cantlin 63 11 left \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_2_a 31 38 13 \
+         cantlin 86 11 up \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_1_b 36 64 11 \
+         cantlin 14 13 right \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_2_b 36 86 12 \
+         cantlin 38 14 down \
+         no_sound false \
+         town false true \
+         false true
+ 
+; ---
+
+teleport teleport_3_a 31 22 22 \
+         cantlin 108 10 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_4_a 31 26 22 \
+         cantlin 112 10 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_5_a 31 27 22 \
+         cantlin 113 10 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_6_a 31 28 22 \
+         cantlin 114 10 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_7_a 31 29 22 \
+         cantlin 115 10 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_8_a 31 29 23 \
+         cantlin 115 11 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_9_a 31 29 24 \
+         cantlin 115 12 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_10_a 31 29 25 \
+         cantlin 115 13 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_11_a 31 29 26 \
+         cantlin 115 14 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_12_a 31 29 27 \
+         cantlin 115 15 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_13_a 31 29 28 \
+         cantlin 115 16 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_14_a 31 29 32 \
+         cantlin 115 20 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_15_a 31 29 33 \
+         cantlin 115 21 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_16_a 31 29 34 \
+         cantlin 115 22 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_17_a 31 27 34 \
+         cantlin 113 22 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_18_a 31 24 34 \
+         cantlin 110 22 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_19_a 31 22 34 \
+         cantlin 108 22 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_20_a 31 22 33 \
+         cantlin 108 21 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_21_a 31 22 32 \
+         cantlin 108 20 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_22_a 31 22 31 \
+         cantlin 108 19 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_23_a 31 22 30 \
+         cantlin 108 18 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_24_a 31 22 29 \
+         cantlin 108 17 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_25_a 31 22 28 \
+         cantlin 108 16 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_26_a 31 22 27 \
+         cantlin 108 15 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_27_a 31 22 26 \
+         cantlin 108 14 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_28_a 31 22 25 \
+         cantlin 108 13 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+; ---
+
+teleport teleport_3_b 36 108 9 \
+         cantlin 22 21 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_4_b 36 112 9 \
+         cantlin 26 21 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_5_b 36 113 9 \
+         cantlin 27 21 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_6_b 36 114 9 \
+         cantlin 28 21 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_7_b 36 115 9 \
+         cantlin 29 21 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_8_b 36 116 10 \
+         cantlin 30 22 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_9_b 36 116 11 \
+         cantlin 30 23 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_10_b 36 116 12 \
+         cantlin 30 24 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_11_b 36 116 13 \
+         cantlin 30 25 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_12_b 36 116 14 \
+         cantlin 30 26 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_13_b 36 116 15 \
+         cantlin 30 27 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_14_b 36 116 16 \
+         cantlin 30 28 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_15_b 36 116 20 \
+         cantlin 30 32 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_16_b 36 116 21 \
+         cantlin 30 33 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_17_b 36 116 22 \
+         cantlin 30 34 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_18_b 36 115 23 \
+         cantlin 29 35 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_19_b 36 113 23 \
+         cantlin 27 35 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_20_b 36 110 23 \
+         cantlin 24 35 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_21_b 36 108 23 \
+         cantlin 22 35 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_22_b 36 107 22 \
+         cantlin 21 34 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_23_b 36 107 21 \
+         cantlin 21 33 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_24_b 36 107 20 \
+         cantlin 21 32 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_25_b 36 107 19 \
+         cantlin 21 31 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_26_b 36 107 18 \
+         cantlin 21 30 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_27_b 36 107 17 \
+         cantlin 21 29 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_28_b 36 107 16 \
+         cantlin 21 28 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_29_b 36 107 15 \
+         cantlin 21 27 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_30_b 36 107 14 \
+         cantlin 21 26 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_31_b 36 107 13 \
+         cantlin 21 25 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_32_b 36 107 10 \
+         cantlin 21 22 preserve \
+         no_sound false \
+         town false true \
+         false true
+
+
+;inn {event_name} {pos_col} {pos_row} {inn_price}
+; ---
+inn inn_1 19 15 100
+
+shop_item shop_item_1 14 18 \
+    ; herb item (id = 41)
+    41 default_price default_price \
+    ; torch item (id = 43)
+    43 default_price default_price
+
+shop_item shop_item_2 17 23 \
+    ; dragon's scale item (id = 44)
+    44 default_price default_price \
+    ; wings item (id = 42)
+    42 default_price default_price
+
+
+shop_equip shop_equip_1 32 16 \
+    ; bamboo pole (item id = 10)
+    10 default_price default_price \
+    ; club (item id = 12)
+    12 default_price default_price \
+    ; copper sword (item id = 13)
+    13 default_price default_price \
+    ; leather armor (item id = 25)
+    25 default_price default_price \
+    ; chain mail (item id = 20)
+    20 default_price default_price \
+    ; large shield (item id = 30)
+    30 default_price default_price
+
+shop_equip shop_equip_2 36 23 \
+    ; flame sword (id = 15)
+    15 default_price default_price \
+    ; silver shield (id = 31)
+    31 default_price default_price
+
+shop_equip shop_equip_3 37 37 \
+    ; hand axe (id = 16)
+    16 default_price default_price \
+    ; broad sword (id = 11)
+    11 default_price default_price \
+    ; full plate (id = 23)
+    23 default_price default_price \
+    ; magic armor (id = 26)
+    26 default_price default_price
+
+
+; shop_keys {event_name} {pos_col} {pos_row} {key_price}
+;---
+shop_keys shop_keys_1_a 38 18 98
+
+
+; shop_fairy_water {event_name} {pos_col} {pos_row} {fairy_water_price}
+; ---
+shop_fairy_water shop_fairy_water_1 32 24 38
+
+
+; npc {event_id} {sprite_start_id} {pos_col} {pos_row} \
+;     STATIC {sprite_direction} | RANDOM {rect_col} {rect_row} {rect_width} {rect_height} \
+;     {texts_global_var_0} ... {texts_global_var_n} | conditional_msgs \
+;        {var_a} {comparisson_operator} {var_b} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;        {var_c} {comparisson_operator} {var_d} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;        {var_e} {comparisson_operator} options 2 (no. of options) 2 (default start option [not implemented!]) 0 (cancel_option / -1 will force to choose one of options) \
+;           {yes_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;           {no_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+; ---
+;    sprite_start_id  description
+; 0                0  hero
+; 1                8  boy
+; 2               16  hero
+; 3               24  girl
+; 4               32  hero
+; 5               40  old_man
+; 6               48  hero
+; 7               56  merchant
+; 8               64  hero_princess
+; 9               72  warrior
+;10               80  princess
+;11               88  dragon_lord
+;12               96  guard
+;13              104  guard_bugle
+;14              106  king
+; ---
+npc npc_shop_item_1 8 13 18 \
+    STATIC right \
+    @@empty
+
+npc npc_shop_item_2 56 18 23 \
+    STATIC left \
+    @@empty
+
+npc npc_shop_equip_1 56 33 16 \
+    STATIC left \
+    @@empty
+
+npc npc_shop_equip_2 56 35 23 \
+    STATIC right \
+    @@empty
+
+npc npc_shop_equip_3 56 38 37 \
+    STATIC left \
+    @@empty
+
+npc npc_inn 56 19 14 \
+    STATIC down \
+    @@empty
+
+npc npc_shop_keys 40 38 17 \
+    STATIC down \
+    @@empty
+
+npc npc_shop_fairy_water 24 33 24 \
+    STATIC left \
+    @@empty
+
+
+;@@cantlin_guard_1 = Welcome to Cantlin, the castle town.
+;@@cantlin_guard_2_a = It is said that many have held Erdrick's armor.
+;@@cantlin_guard_2_b = The last to have it was a fellow named Wynn.
+;@@cantlin_guard_3_a = 'Tis said that the Dragonlord hath claws that can cleave iron and fiery breath that can melt stone.
+;@@cantlin_guard_3_b = Dost thou still wish to go on?
+;@@cantlin_guard_3_yes = Thou art truly brave.
+;@@cantlin_guard_3_no = That is good. | No one will say thou art afraid.
+
+npc guard_1 96 26 17 \
+    RANDOM 18 12 16 10 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@cantlin_guard_1
+
+npc guard_2 96 33 20 \
+    RANDOM 30 11 11 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 2 @@cantlin_guard_2_a @@cantlin_guard_2_b
+
+npc guard_3 96 23 18 \
+    RANDOM 11 11 16 11 \
+    conditional_msgs \ 
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 2 @@cantlin_guard_3_a @@cantlin_guard_3_b options 2 0 1 \
+            @@option_yes 1 @@cantlin_guard_3_yes \
+            @@option_no 1 @@cantlin_guard_3_no
+
+
+;@@cantlin_old_man_1 = 'Tis said that Erdrick's sword could cleave steel.
+;@@cantlin_old_man_2 = To learn how proof may be obtained that thy ancestor was the great Erdrick, see a man in this very town.
+;@@cantlin_old_man_3_a = Let us wish the warrior well!
+;@@cantlin_old_man_3_b = May the light be thy strength!
+;@@cantlin_old_man_3_c = Thou may go and search.
+;@@cantlin_old_man_3_d = From Tantegel Castle travel 70 leagues to the south and 40 to the east.
+
+npc old_man_1_a 40 33 33 \
+    STATIC down \
+    @@empty
+
+npc old_man_1_b 112 33 34 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@kol_old_man \
+        1 == 1 1 @@cantlin_old_man_1
+
+npc old_man_2 40 112 15 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@kol_old_man \
+        1 == 1 1 @@cantlin_old_man_2
+
+npc old_man_3 40 25 39 \
+    RANDOM 25 39 2 1 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@kol_old_man \
+        1 == 1 4 @@cantlin_old_man_3_a @@cantlin_old_man_3_b @@cantlin_old_man_3_c @@cantlin_old_man_3_d
+
+
+;@@cantlin_boy_1 = I'm Nester. | Hey, where am I? No, don't tell me!
+
+npc boy_1 8 31 29 \
+    RANDOM 30 19 11 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@cantlin_boy_1
+
+
+;@@cantlin_girl_1 = What shall I get for thy dinner?
+;@@cantlin_girl_2 = I know nothing.
+
+npc girl_1 24 16 14 \
+    RANDOM 11 11 16 11 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@cantlin_girl_1
+
+npc girl_2 24 20 22 \
+    RANDOM 11 11 11 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@cantlin_girl_2
+
+
+;@@cantlin_merchant_1 = Grandfather used to say that his friend, Wynn, had buried something of great value at the foot of a tree behind his shop.
+;@@cantlin_merchant_2 = Come buy my radishes! They are fresh and cheap. | Buy thy radishes today!
+;@@cantlin_merchant_3 = My Grandfather Wynn once had a shop on the east side of Hauksness.
+
+npc merchant_1 56 36 28 \
+    RANDOM 30 25 11 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@cantlin_merchant_1
+
+npc merchant_3_a 56 13 23 \
+    STATIC right \
+    @@empty
+
+npc merchant_2_b 112 14 23 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@cantlin_merchant_2
+
+npc merchant_3_a 56 15 37 \
+    STATIC right \
+    @@empty
+
+npc merchant_3_b 112 16 37 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@cantlin_merchant_3

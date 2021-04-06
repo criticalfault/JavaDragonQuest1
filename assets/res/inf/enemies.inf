@@ -1,0 +1,47 @@
+#Group 1: #00 (Slime) - #19 (Druinlord)
+#Group 2: #20 (Drollmagi) - #29 (Werewolf)
+#Group 3: #30 (Green Dragon) - #34 (Blue Dragon)
+#Group 4: #35 (Stoneman) - #39 (Dragonlord second form)
+
+# ID Enemy Name       Str  Agi  HP   Pat  SR   DR   XP   GP   Group_ID  Final_boss
+00,  Slime          , 05,  03,  03,  00,  0F,  01,  01,  02,  01,       false
+01,  Red Slime      , 07,  03,  04,  00,  0F,  01,  01,  03,  01,       false
+02,  Drakee         , 09,  06,  06,  00,  0F,  01,  02,  03,  01,       false
+03,  Ghost          , 0B,  08,  07,  00,  0F,  04,  03,  05,  01,       false
+04,  Magician       , 0B,  0C,  0D,  02,  00,  01,  04,  0C,  01,       false
+05,  Magidrakee     , 0E,  0E,  0F,  02,  00,  01,  05,  0C,  01,       false
+06,  Scorpion       , 12,  10,  14,  00,  0F,  01,  06,  10,  01,       false
+07,  Druin          , 14,  12,  16,  00,  0F,  02,  07,  10,  01,       false
+08,  Poltergeist    , 12,  14,  17,  03,  00,  06,  08,  12,  01,       false
+09,  Droll          , 18,  18,  19,  00,  0E,  02,  0A,  19,  01,       false
+0A,  Drakeema       , 16,  1A,  14,  92,  20,  06,  0B,  14,  01,       false
+0B,  Skeleton       , 1C,  16,  1E,  00,  0F,  04,  0B,  1E,  01,       false
+0C,  Warlock        , 1C,  16,  1E,  12,  31,  02,  0D,  23,  01,       false
+0D,  Metal Scorpion , 24,  2A,  16,  00,  0F,  02,  0E,  28,  01,       false
+0E,  Wolf           , 28,  1E,  22,  00,  1F,  02,  10,  32,  01,       false
+0F,  Wraith         , 2C,  22,  24,  90,  70,  04,  11,  3C,  01,       false
+10,  Metal Slime    , 0A,  FF,  04,  03,  FF,  F1,  73,  06,  01,       false
+11,  Specter        , 28,  26,  24,  13,  31,  04,  12,  46,  01,       false
+12,  Wolflord       , 32,  24,  26,  60,  47,  02,  14,  50,  01,       false
+13,  Druinlord      , 2F,  28,  23,  B1,  F0,  04,  14,  55,  01,       false
+14,  Drollmagi      , 34,  32,  26,  60,  22,  01,  16,  5A,  02,       false
+15,  Wyvern         , 38,  30,  2A,  00,  4F,  02,  18,  64,  02,       false
+16,  Rogue Scorpion , 3C,  5A,  23,  00,  7F,  02,  1A,  6E,  02,       false
+17,  Wraith Knight  , 44,  38,  2E,  B0,  50,  34,  1C,  78,  02,       false
+18,  Golem          , 78,  3C,  46,  00,  FF,  F0,  05,  0A,  02,       false
+19,  Goldman        , 30,  28,  32,  00,  DF,  01,  06,  C8,  02,       false
+1A,  Knight         , 4C,  4E,  37,  60,  67,  01,  21,  82,  02,       false
+1B,  Magiwyvern     , 4E,  44,  3A,  20,  20,  02,  22,  8C,  02,       false
+1C,  Demon Knight   , 4F,  40,  32,  00,  FF,  FF,  25,  96,  02,       false
+1D,  Werewolf       , 56,  46,  3C,  00,  7F,  07,  28,  9B,  02,       false
+1E,  Green Dragon   , 58,  4A,  41,  09,  7F,  22,  2D,  A0,  03,       false
+1F,  Starwyvern     , 56,  50,  41,  F9,  80,  12,  2B,  A0,  03,       false
+20,  Wizard         , 50,  46,  41,  06,  F7,  F2,  32,  A5,  03,       false
+21,  Axe Knight     , 5E,  52,  46,  10,  F3,  11,  36,  A5,  03,       false
+22,  Blue Dragon    , 62,  54,  46,  09,  FF,  72,  3C,  96,  03,       false
+23,  Stoneman       , 64,  28,  A0,  00,  2F,  71,  41,  8C,  04,       false
+24,  Armored Knight , 69,  56,  5A,  F5,  F7,  12,  46,  8C,  04,       false
+25,  Red Dragon     , 78,  5A,  64,  19,  F7,  F2,  64,  8C,  04,       false
+26,  Dragonlord     , 5A,  4B,  64,  57,  FF,  F0,  00,  00,  04,       true
+27,  Dragonlord     , 8C,  C8,  82,  0E,  FF,  F0,  00,  00,  04,       true
+

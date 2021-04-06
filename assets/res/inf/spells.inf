@@ -1,0 +1,229 @@
+# http://www.realmofdarkness.net/dq/nes-dw-spells/
+# https://strategywiki.org/wiki/Dragon_Warrior/Spells
+
+# use always dialog_show 0 0 "message" to not block the UI for wait for key press in battle
+# when called from map (field), wait_for_fire_key must be called manually
+
+#     id  name        lvl   mp   use_battle use_map  type/target 
+
+#Your first spell is one of the most useful. If your HP is low, chant the Heal Spell to raise your HP by 10~17 points.
+spell  1, Heal       ,  3 ,  4 ,       true,   true, Heal hero
+script
+    ; map: ret 0->cast spell return to menu | 1->cast spell and exit menu
+    on_use_when_map:
+        heal_player 10 17
+        show_player_simplified_status
+        wait_for_any_key
+        ret 1
+
+    ; battle: ret 0->keep player turn | 1->pass the turn to enemy
+    on_use_when_battle:
+        heal_player 10 17
+        show_player_simplified_status
+        ret 1
+script_end
+
+
+#Hurl magic fire balls at the enemy with Hurt. You can go far with this spell, damaging enemies for 8~12 HP.
+spell  2, Hurt       ,  4 ,  2 ,       true,   true, Attack enemy
+script
+    on_use_when_map:
+        sleep 500
+        show_dialog 0 1 @@player_cast_spell_but_nothing_happened
+        ; map: ret 0->cast spell return to menu | 1->cast spell and exit menu
+        ret 1
+
+    on_use_when_battle:
+            check_battle_enemy_resisted_hurt "##battle_enemy_resisted_hurt"
+            if ##battle_enemy_resisted_hurt "==" 1 "enemy_resisted_to_spell"
+            hit_enemy 5 12
+            goto "when_battle_exit"
+        enemy_resisted_to_spell:
+            sleep 500
+            show_dialog 0 0 @@spell_will_not_work
+            goto "when_battle_exit"
+        when_battle_exit:
+            ; battle: ret 0->keep player turn | 1->pass the turn to enemy
+            ret 1
+script_end
+
+
+#Sleep is used during a battle to put the enemy to sleep. It doesn't always work.
+spell  3, Sleep      ,  7 ,  2 ,       true,   true, Disable enemy
+script
+    on_use_when_map:
+        sleep 500
+        show_dialog 0 1 @@player_cast_spell_but_nothing_happened
+        ; map: ret 0->cast spell return to menu | 1->cast spell and exit menu
+        ret 1
+
+    on_use_when_battle:
+            check_battle_enemy_resisted_sleep "##battle_enemy_resisted_sleep"
+            if ##battle_enemy_resisted_sleep "==" 1 "enemy_resisted_to_spell"
+            sleep_enemy
+            show_dialog 0 0 @@spell_sleep_success
+            goto "when_battle_exit"
+        enemy_resisted_to_spell:
+            sleep 500
+            show_dialog 0 0 @@spell_will_not_work
+            goto "when_battle_exit"
+        when_battle_exit:
+            ; battle: ret 0->keep player turn | 1->pass the turn to enemy
+            ret 1
+script_end
+
+
+#Did you forget to bring a torch into the cave? If you have Radiant, it doesn't matter.
+spell  4, Radiant    ,  9 ,  3 ,      false,   true, Field
+script
+    ; map: ret 0->cast spell return to menu | 1->cast spell and exit menu
+    on_use_when_map:
+            if ##current_map_is_dark "!=" 1 "map_is_not_dark"
+        map_dark:
+            sleep 500
+            ; sound_id = 3 -> using torch sound
+            play_sound 3
+            player_cast_radiant_spell
+            consume_item 43
+            force_redraw
+            ret 1
+        map_is_not_dark:
+            sleep 500
+            show_dialog 0 1 @@player_cast_spell_but_nothing_happened
+            ret 1
+
+    ; battle: ret 0->keep player turn | 1->pass the turn to enemy
+    on_use_when_battle:
+            ; this spell can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+#When you encounter an enemy who uses magic, cast this spell to protect yourself. Very few monsters resist this spell!
+spell  5, StopSpell  , 10 ,  2 ,       true,   true, Disable enemy
+script
+    on_use_when_map:
+        sleep 500
+        show_dialog 0 1 @@player_cast_spell_but_nothing_happened
+        ; map: ret 0->cast spell return to menu | 1->cast spell and exit menu
+        ret 1
+
+    on_use_when_battle:
+            check_battle_enemy_resisted_stop_spell "##battle_enemy_resisted_stop_spell"
+            if ##battle_enemy_resisted_stop_spell "==" 1 "enemy_resisted_to_spell"
+            stop_spell_enemy
+            show_dialog 0 0 @@spell_stop_spell_success
+            goto "when_battle_exit"
+        enemy_resisted_to_spell:
+            sleep 500
+            show_dialog 0 0 @@spell_will_not_work
+            goto "when_battle_exit"
+        when_battle_exit:
+            ; battle: ret 0->keep player turn | 1->pass the turn to enemy
+            ret 1
+script_end
+
+
+#Deep in the underground caves and dungeons lurk terrible creatures. Escape from these places by chanting Outside.
+spell  6, Outside    , 12 ,  6 ,       false,   true, Field
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            if ##current_map_is_dark "!=" 1 "map_is_not_dark"
+        map_is_dark:
+            sleep 500
+            teleport $$player_outside_map ##player_outside_col ##player_outside_row "down" 1 $$player_outside_music_id 0 0 0 1
+            ; sound_id = 19 -> stairs sound
+            play_sound 19
+            ret 1
+        map_is_not_dark:
+            sleep 500
+            show_dialog 0 1 @@player_cast_spell_but_nothing_happened
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+#Return whisks you back to Tantegel Castle from anywhere in the overworld of Alefgard.
+spell  7, Return     , 13 ,  8 ,       false,   true, Field
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+            if ##current_map_is_dark "==" 1 "map_is_dark"
+        map_is_not_dark:
+            sleep 500
+            ; sound_id = 21 -> wings sound
+            play_sound 21
+            teleport "world" 46 47 "down" 1 "world" 0 0 0 1
+            ret 1
+        map_is_dark:
+            sleep 500
+            show_dialog 0 1 @@player_cast_spell_but_nothing_happened
+            ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+            ; this item can't be used in battle, so ret value is irrelevant
+            ret 1
+script_end
+
+
+#Like sprinkling Fairy Water, Repel keeps monsters at a healthy distance when you are in the countryside. The effect lasts for 127 steps.
+spell  8, Repel      , 15 ,  2 ,       false,   true, Field
+script
+    ; map: ret 0->use item and return to menu | 1->use item and exit menu
+    on_use_when_map:
+        set_player_repel_counter 128 "Repel"
+        wait_for_any_key
+        ret 1
+
+    ; battle: ret 0->keep turn | 1->pass turn to enemy
+    on_use_when_battle:
+        ; this spell can't be used in battle, so ret value is irrelevant
+        ret 1
+script_end
+
+
+#More potent than Heal, Healmore restores 85~100 HP each time you chant it.
+spell  9, HealMore   , 17 , 10 ,       true,   true, Heal hero
+script
+    on_use_when_map:
+        heal_player 85 100
+        show_player_simplified_status
+        wait_for_any_key
+        ; map: ret 0->cast spell return to menu | 1->cast spell and exit menu
+        ret 1
+
+    on_use_when_battle:
+        heal_player 85 100
+        show_player_simplified_status
+        ; battle: ret 0->keep player turn | 1->pass the turn to enemy
+        ret 1
+script_end
+
+
+# More devastating than Hurt; with Hurtmore you can challenge even the strongest enemies. Deals 58~65 damage.
+spell 10, Hurtmore   , 19 ,  5 ,       true,   true, Attack enemy	
+script
+    on_use_when_map:
+        show_dialog 0 1 @@player_cast_spell_but_nothing_happened
+        ; map: ret 0->cast spell return to menu | 1->cast spell and exit menu
+        ret 1
+
+    on_use_when_battle:
+            check_battle_enemy_resisted_hurt "##battle_enemy_resisted_hurt"
+            if ##battle_enemy_resisted_hurt "==" 1 "enemy_resisted_to_spell"
+            hit_enemy 58 65
+            goto "when_battle_exit"
+        enemy_resisted_to_spell:
+            sleep 500
+            show_dialog 0 0 @@spell_will_not_work
+            goto "when_battle_exit"
+        when_battle_exit:
+            ; battle: ret 0->keep player turn | 1->pass the turn to enemy
+            ret 1
+script_end

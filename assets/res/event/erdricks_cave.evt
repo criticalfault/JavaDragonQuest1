@@ -1,0 +1,68 @@
+; --- erdrick's cave ---
+; ----------------------
+
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 55 12
+
+
+; chest with eldrick's tablet (id = 51)
+; note: this item will not be added to the player's inventory 
+; ---
+event chest_1
+animation tileset 6 7 100
+create_animation static 23
+location 55 15
+movement STATIC
+visible true
+blocked false
+fire_required true
+script
+    on_map_enter:
+            if_set #chest_1_opened "hide_event"
+            change_event_visibility "chest_1" 1
+            ret
+        hide_event:
+            change_event_visibility "chest_1" 0
+            ret
+
+    on_event_trigger:
+            show_player_simplified_status
+            change_event_visibility "chest_1" 0
+            force_redraw
+            set #chest_1_opened 1
+            ; 13 = chest opened sound
+            play_sound 13
+        found_item:
+            set #chest_001_item_id 51
+            set $$chest_item_name "Eldrick's Tablet"
+            show_dialog 0 0 @@chest_found_item_1
+            show_dialog 0 2 @@chest_found_item_2
+
+            show_dialog 0 2 @@item_erdricks_tablet_1
+            show_dialog 0 0 ""
+            show_dialog 1 2 @@item_erdricks_tablet_2
+            show_dialog 1 2 @@item_erdricks_tablet_3
+            show_dialog 1 2 @@item_erdricks_tablet_4
+            show_dialog 1 2 @@item_erdricks_tablet_5
+            show_dialog 1 2 @@item_erdricks_tablet_6
+            show_dialog 1 1 @@item_erdricks_tablet_7
+
+            close_dialog
+            hide_player_simplified_status
+            ret
+script_end
+event_end
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} {map_id} \
+;          {player_col} {player_row} {player_direction} \
+;          {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;          {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;          {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_0 28 12 12 world 32 16 down default_sound true world false false false true
+teleport teleport_1 29 21 21 erdricks_cave 55 21 right default_sound true dungeon true true false false
+teleport teleport_2 28 54 21 erdricks_cave 20 21 left default_sound true dungeon true true false false
+

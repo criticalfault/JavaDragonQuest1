@@ -1,0 +1,293 @@
+; --- brecconary --- 
+; ------------------
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 17 35
+
+
+; door {event_name} {sprite_id} {pos_col} {pos_row} {persistent}
+;---
+door door_1 22 15 33 false
+door door_2 22 31 16 false
+
+
+; teleport {event_id} {sprite_id} {pos_col} {pos_row} \
+;          {map_id} {player_col} {player_row} {player_direction} \
+;          {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;          {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;          {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_1 31 32 34 \
+         brecconary 61 11 down \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_2 31 31 15 \
+         brecconary 87 13 up \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_3 36 61 10 \
+         brecconary 32 33 up \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_4 36 87 14 \
+         brecconary 31 16 down \
+         no_sound false \
+         town false true \
+         false true
+
+
+; inn {event_name} {pos_col} {pos_row} {inn_price}
+; ---
+inn inn_1 19 31 6
+
+
+shop_item shop_item_1 63 12 \
+    ; herb (id = 41)
+    41 default_price default_price \
+    ; torch (id = 43)
+    43 default_price default_price \
+    ; dragon's scale (id = 44)
+    44 default_price default_price
+
+
+shop_equip shop_equip_1 15 15 \
+    ; bamboo pole (id = 10)
+    10 default_price default_price \
+    ; club (id = 12)
+    12 default_price default_price \
+    ; copper sword (id = 13)
+    13 default_price default_price \
+    ; clothes (id = 21)
+    21 default_price default_price \
+    ; leather armor (id = 25)
+    25 default_price default_price \
+    ; small shield (id = 32)
+    32 default_price default_price
+
+
+; shop_fairy_water {event_name} {pos_col} {pos_row} {fairy_water_price}
+; ---
+shop_fairy_water shop_fairy_water_1 89 12 38
+
+
+; npc {event_id} {sprite_start_id} {pos_col} {pos_row} \
+;     STATIC {sprite_direction} | RANDOM {rect_col} {rect_row} {rect_width} {rect_height} \
+;     {texts_global_var_0} ... {texts_global_var_n} | conditional_msgs \
+;        {var_a} {comparisson_operator} {var_b} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;        {var_c} {comparisson_operator} {var_d} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;        {var_e} {comparisson_operator} options 2 (no. of options) 2 (default start option [not implemented!]) 0 (cancel_option / -1 will force to choose one of options) \
+;           {yes_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;           {no_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+; ---
+;    sprite_start_id  description
+; 0                0  hero
+; 1                8  boy
+; 2               16  hero
+; 3               24  girl
+; 4               32  hero
+; 5               40  old_man
+; 6               48  hero
+; 7               56  merchant
+; 8               64  hero_princess
+; 9               72  warrior
+;10               80  princess
+;11               88  dragon_lord
+;12               96  guard
+;13              104  guard_bugle
+;14              106  king
+; ---
+npc npc_shop_item 56 64 12 \
+    STATIC left \
+    @@empty
+
+npc npc_shop_equip 56 15 14 \
+    STATIC down \
+    @@empty
+
+npc npc_inn 56 20 31 \
+    STATIC left \
+    @@empty
+
+npc npc_shop_fairy_water 24 90 12 \
+    STATIC left \
+    @@empty
+
+
+;@@brecconary_boy_1 = Thou art most welcome in Brecconary.
+;@@brecconary_boy_2 = Go north to the seashore, then follow the coastline west until thou hath reached Garinham.
+;@@brecconary_boy_3 = There is a town where magic keys can be purchased.
+;@@brecconary_boy_4 = Enter where thou can.
+;@@brecconary_boy_5_a = Within sight of Tantegel Castle to the south is Charlock,
+;@@brecconary_boy_5_b = The fortress of the Dragonlord.
+
+npc boy_1 8 11 23 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@brecconary_boy_1
+
+npc boy_2 8 26 13 \
+    RANDOM 16 11 14 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@brecconary_boy_2
+
+npc boy_3 8 30 20 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@brecconary_boy_3
+
+npc boy_4 8 30 33 \
+    STATIC up \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@brecconary_boy_4
+
+npc boy_5 8 38 36 \
+    RANDOM 33 30 6 9 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 2 @@brecconary_boy_5_a @@brecconary_boy_5_b
+
+
+;@@brecconary_girl_1 = Welcome! | Enter the shop and speak to its keeper across the desk.
+;@@brecconary_girl_2 = No,I am not Princess Gwaelin.
+
+npc girl_1 24 14 17 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@brecconary_girl_1
+
+npc girl_2 24 22 26 \
+    RANDOM 15 18 15 10 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@brecconary_girl_2
+
+
+;@@brecconary_old_man_1 = Watch thy Hit Points when in the Poisonous Marsh.
+;@@brecconary_old_man_2_a = If thou art cursed, come again.
+;@@brecconary_old_man_2_b = I will free thee from thy curse.
+;@@brecconary_old_man_2_c = Now, go.
+
+npc old_man_1 40 33 18 \
+    RANDOM 22 13 16 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@kol_old_man \
+        1 == 1 1 @@brecconary_old_man_1
+
+; reference: https://www.youtube.com/watch?v=MN8FJvfadFM
+; old man 2 - free player from curse
+; ---
+event old_man_2
+animation chars 16 8 100
+create_animation left 42 43
+create_animation up 44 45
+create_animation right 46 47
+create_animation down 40 41
+location 34 20  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_event_trigger:
+            is_player_cursed "##player_is_cursed"
+            if ##player_is_cursed "==" 1 "player_cursed"
+        player_not_cursed:
+            show_dialog 1 1 @@brecconary_old_man_2_a 
+            goto "exit"
+        player_cursed:
+            remove_player_all_curses
+            show_dialog 1 2 @@brecconary_old_man_2_b
+            show_dialog 1 1 @@brecconary_old_man_2_c
+            goto "exit"
+        exit:
+            close_dialog
+            ret
+script_end
+event_end
+
+
+;@@brecconary_guard_1_a = Tell King Lorik that the search for his daughter hath failed.
+;@@brecconary_guard_1_b = I am almost gone....
+;@@brecconary_guard_1_c = Who touches me? | I see nothing, nor can I hear.
+;@@brecconary_guard_2 = See King Lorik when thy experience levels are raised.
+
+npc guard_1 96 20 36 \
+    STATIC up \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ##game_state_princess_rescued > 0 1 @@brecconary_guard_1_c \
+        1 == 1 2 @@brecconary_guard_1_a @@brecconary_guard_1_b
+
+npc guard_2 96 38 23 \
+    RANDOM 35 17 5 11 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@brecconary_guard_2
+
+
+;@@brecconary_warrior_1_a = Many have been the warriors who have perished on this quest.
+;@@brecconary_warrior_1_b = But for thee I wish success, $$player_name .
+;@@brecconary_warrior_2_a = Beware the bridges!
+;@@brecconary_warrior_2_b = Danger grows when thou crosses.
+;@@brecconary_warrior_3 = Art thou the descendant of Erdrick? | Hast thou any proof?
+;@@brecconary_warrior_4 = Some say that Garin's grave is home to a Silver Harp.
+
+npc warrior_1 72 25 32 \
+    RANDOM 20 23 16 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 2 @@brecconary_warrior_1_a @@brecconary_warrior_1_b
+
+npc warrior_2 72 38 11 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 2 @@brecconary_warrior_2_a @@brecconary_warrior_2_b
+
+npc warrior_3 72 14 29 \
+    RANDOM 11 23 16 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@brecconary_warrior_3
+
+npc warrior_4 72 13 32 \
+    RANDOM 12 30 4 8 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@brecconary_warrior_4
+
+
+;@@brecconary_merchant_1 = Please,save us from the minions of the Dragonlord.
+
+npc merchant_1 56 12 12 \
+    RANDOM 11 11 16 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@brecconary_merchant_1
+

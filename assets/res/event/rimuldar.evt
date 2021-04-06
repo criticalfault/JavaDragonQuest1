@@ -1,0 +1,286 @@
+; --- rimuldar --- 
+; ----------------
+
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 28 33
+
+
+;door {event_name} {sprite_id} {pos_col} {pos_row} {persistent}
+;---
+door door_1 22 32 31 false
+door door_2 22 33 33 false
+
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+; wings (id = 42)
+chest chest_1 35 33 42 false
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} \
+;         {map_id} {player_col} {player_row} {player_direction} \
+;         {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;         {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;         {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_1 31 21 30 \
+         rimuldar 94 11 down \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_2 31 22 30 \
+         rimuldar 95 11 down \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_3 31 16 13 \
+         rimuldar 64 11 right \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_4 36 63 11 \
+         rimuldar 15 13 left \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_5 36 94 10 \
+         rimuldar 21 29 up \
+         no_sound false \
+         town false true \
+         false true
+
+teleport teleport_6 36 95 10 \
+         rimuldar 22 29 up \
+         no_sound false \
+         town false true \
+         false true
+
+
+;inn {event_name} {pos_col} {pos_row} {inn_price}
+; ---
+inn inn_1 28 28 55
+
+
+shop_equip shop_equip_1 34 18 \
+    ; copper sword (id = 13)
+    13 default_price default_price \
+    ; hand axe (id = 16)
+    16 default_price default_price \
+    ; broad sword (id = 11)
+    11 default_price default_price \
+    ; half plate (id = 24)
+    24 default_price default_price \
+    ; full plate (id = 23)
+    23 default_price default_price \
+    ; magic armor (id = 26)
+    26 default_price default_price
+
+
+; shop_keys {event_name} {pos_col} {pos_row} {key_price}
+;---
+shop_keys shop_keys_1_a 63 14 53
+
+
+;npc {event_id} {sprite_start_id} {pos_col} {pos_row} \
+;    STATIC {sprite_direction} | RANDOM {rect_col} {rect_row} {rect_width} {rect_height} \
+;    {texts_global_var_0} ... {texts_global_var_n} | conditional_msgs \
+;       {var_a} {comparisson_operator} {var_b} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;       {var_c} {comparisson_operator} {var_d} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;       {var_e} {comparisson_operator} options 2 (no. of options) 2 (default start option [not implemented!]) 0 (cancel_option / -1 will force to choose one of options) \
+;          {yes_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;          {no_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+; ---
+;    sprite_start_id  description
+; 0                0  hero
+; 1                8  boy
+; 2               16  hero
+; 3               24  girl
+; 4               32  hero
+; 5               40  old_man
+; 6               48  hero
+; 7               56  merchant
+; 8               64  hero_princess
+; 9               72  warrior
+;10               80  princess
+;11               88  dragon_lord
+;12               96  guard
+;13              104  guard_bugle
+;14              106  king
+;15              112  transparent
+; ---
+npc npc_shop_equip 56 34 17 \
+    STATIC down \
+    @@empty
+
+npc npc_inn 56 27 28 \
+    STATIC right \
+    @@empty
+
+npc shop_keys_1_b 40 63 15 \
+    STATIC up \
+    @@empty
+
+
+;@@rimuldar_old_man_1_a = Over the western part of this island Erdrick created a rainbow.
+;@@rimuldar_old_man_1_b = 'Tis also said that he entered the darkness from a hidden entrance in the room of the Dragonlord.
+;@@rimuldar_old_man_2 = This is a magic place. | Hast thou found a magic temple?
+;@@rimuldar_old_man_2_yes = In this temple do the sun and rain meet.
+;@@rimuldar_old_man_2_no = Go to the south.
+;@@rimuldar_old_man_3 = Good day,I am Howard. Four steps south of the bath in Kol thou shalt find a magic item.
+
+npc old_man_1 40 17 23 \
+    STATIC left \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@kol_old_man \
+        1 == 1 2 @@rimuldar_old_man_1_a @@rimuldar_old_man_1_b
+
+npc old_man_2_a 40 87 14 \
+    STATIC right \
+    @@empty
+
+npc old_man_2_b 112 88 14 \
+    RANDOM 68 14 3 5 \
+    conditional_msgs \ 
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_old_man_2 options 2 0 1 \
+            @@option_yes 1 @@rimuldar_old_man_2_yes \
+            @@option_no 1 @@rimuldar_old_man_2_no
+
+npc old_man_3 40 31 33 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@kol_old_man \
+        1 == 1 1 @@rimuldar_old_man_3
+
+
+;@@rimuldar_boy_1 = Welcome to the town of Rimuldar.
+;@@rimuldar_boy_2 = Art thou the descendant of Erdrick? | Hast thou any proof?
+;@@rimuldar_boy_3 = Heed my warning! Travel not to the south for there the monsters are fierce and terrible.
+;@@rimuldar_boy_4 = I am Orwick, and I am waiting for my girl friend.
+
+npc boy_1 8 24 22 \
+    RANDOM 17 17 16 12 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_boy_1
+
+npc boy_2 8 22 18 \
+    RANDOM 21 17 3 2 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_boy_2
+
+npc boy_3 8 93 15 \
+    RANDOM 87 13 9 5 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_boy_3
+
+npc boy_4 8 38 10 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_boy_4
+
+
+;@@rimuldar_guard_1 = Thou shalt find the Stones of Sunlight in Tantegel Castle, if thou has not found them yet.
+
+npc guard_1 96 19 25 \
+    RANDOM 12 17 14 12 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_guard_1
+
+
+;@@rimuldar_girl_1 = No, I have no tomatoes. | I have no tomatoes today.
+;@@rimuldar_girl_2 = Who art thou? | Leave at once or I will call my friends.
+;@@rimuldar_girl_3 = Before long the enemy will arrive.
+;@@rimuldar_girl_4 = Orwick is late again. I'm starving.
+
+npc girl_1 24 33 24 \
+    RANDOM 23 17 16 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_girl_1
+
+npc girl_2 24 26 18 \
+    STATIC up \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_girl_2
+
+npc girl_3 24 92 12 \
+    RANDOM 89 12 7 6 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_girl_3
+
+npc girl_4 24 11 36 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_girl_4
+
+
+;@@rimuldar_warrior_1 = You are $$player_name ? | It has been long since last we met.
+;@@rimuldar_warrior_2 = The scales of the Dragonlord are as hard as steel.
+;@@rimuldar_warrior_3_a = All true warriors wear a ring.
+;@@rimuldar_warrior_3_b = Is that a wedding ring? | Thou seems too young to be married.
+;@@rimuldar_warrior_4 = In this world is there any sword that can pierce the scales of the Dragonlord?
+
+npc warrior_1 72 35 29 \
+    RANDOM 34 28 2 3 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_warrior_1
+
+npc warrior_2 72 34 21 \
+    RANDOM 33 19 3 3 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_warrior_2
+
+npc warrior_3 72 26 36 \
+    RANDOM 24 29 10 9 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        ##player_put_fighters_ring == 1 1 @@rimuldar_warrior_3_b \
+        1 == 1 1 @@rimuldar_warrior_3_a
+
+npc warrior_4 72 89 16 \
+    RANDOM 87 11 7 7 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_warrior_4
+
+
+;@@rimuldar_merchant_1 = Welcome!
+
+npc merchant_1 56 13 14 \
+    STATIC up \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@rimuldar_merchant_1

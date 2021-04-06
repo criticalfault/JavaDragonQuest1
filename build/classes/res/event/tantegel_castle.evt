@@ -1,0 +1,1036 @@
+; --- throne room --- 
+; -------------------
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 63 20
+
+
+;door {event_name} {sprite_id} {pos_col} {pos_row} {persistent}
+;---
+door door_1 22 66 19 true
+
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+; gold 120
+chest chest_1 66 16 gold_120 true
+
+; torch (id = 43)
+chest chest_2 67 16 43 true
+
+; magic key (id = 46)
+chest chest_3 68 13 46 true
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} \
+;         {map_id} {player_col} {player_row} {player_direction} \
+;         {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;         {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;         {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_1 29 70 20 \
+         tantegel_castle 18 17 right \
+         default_sound true \
+         tantegel false true \
+         false true
+
+
+;npc {event_id} {sprite_start_id} {pos_col} {pos_row} \
+;    STATIC {sprite_direction} | RANDOM {rect_col} {rect_row} {rect_width} {rect_height} \
+;    {texts_global_var_0} ... {texts_global_var_n} | conditional_msgs \
+;       {var_a} {comparisson_operator} {var_b} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;       {var_c} {comparisson_operator} {var_d} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;       {var_e} {comparisson_operator} options 2 (no. of options) 2 (default start option [not implemented!]) 0 (cancel_option / -1 will force to choose one of options) \
+;          {yes_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n} \
+;          {no_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+; ---
+;    sprite_start_id  description
+; 0                0  hero
+; 1                8  boy
+; 2               16  hero
+; 3               24  girl
+; 4               32  hero
+; 5               40  old_man
+; 6               48  hero
+; 7               56  merchant
+; 8               64  hero_princess
+; 9               72  warrior
+;10               80  princess
+;11               88  dragon_lord
+;12               96  guard
+;13              104  guard_bugle
+;14              106  king
+; ---
+
+;@@tantegel_guard_1_a = Dost thou know about Princess Gwaelin?
+;@@tantegel_guard_1_b = Half a year now hath passed since the Princess was kidnapped by the enemy.
+;@@tantegel_guard_1_c = Never does the King speak of it, but he must be suffering much.
+;@@tantegel_guard_1_d = $$player_name , please save the Princess.
+;@@tantegel_guard_1_e = Oh, brave $$player_name .
+
+npc guard_1 96 68 16 \
+    RANDOM 69 13 2 6 \
+    conditional_msgs \ 
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ##game_state_princess_rescued > 0 1 @@tantegel_guard_1_e \
+        1 == 1 1 @@tantegel_guard_1_a options 2 0 1 \
+            @@option_yes 1 @@tantegel_guard_1_d \
+            @@option_no 3 @@tantegel_guard_1_b @@tantegel_guard_1_c @@tantegel_guard_1_d
+
+;@@tantegel_guard_2_a = East of this castle is a town where armor, weapons, and many other items may be purchased.
+;@@tantegel_guard_2_b = Return to the Inn for a rest if thou art wounded in battle, $$player_name .
+;@@tantegel_guard_2_c = Sleep heals all.
+;@@tantegel_guard_2_d = A word of advice.
+;@@tantegel_guard_2_e = Save thy money for more expensive armor.
+
+npc guard_2 96 65 18 \
+    STATIC right \
+    conditional_msgs \ 
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ##game_state_princess_rescued > 0 2 @@tantegel_guard_2_d @@tantegel_guard_2_e \
+        1 == 1 3 @@tantegel_guard_2_a @@tantegel_guard_2_b @@tantegel_guard_2_c
+
+
+;@@tantegel_guard_3_a = If thou hast collected all the Treasure Chests, a key will be found.
+;@@tantegel_guard_3_b = Once used, the key will disappear, but the door will be open and thou may pass through.
+;@@tantegel_guard_3_c = Listen to what people say. | It can be of great help.
+
+npc guard_3 96 67 18 \
+    STATIC left \
+    conditional_msgs \ 
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ##game_state_princess_rescued > 0 1 @@tantegel_guard_3_c \
+        1 == 1 2 @@tantegel_guard_3_a @@tantegel_guard_3_b
+
+
+; ---
+event king_lorik
+animation chars 16 8 100
+create_animation down 106 107
+location 65 15  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_map_internal_enter:
+            log "internal enter king lorik ..."
+            ret
+
+    on_map_internal_exit:
+            set ##king_lorik_switch_1 1
+            log "internal exit king lorik ..."
+            ret
+
+    on_map_enter:
+            ; player just died ?
+            if ##player_just_died "==" 1 "map_enter_dragon_lord_still_not_defeated"
+            ; dragon lord defeated ?
+            if ##game_state_dragon_lord_defeated ">" 0 "map_enter_dragon_lord_defeated"
+        map_enter_dragon_lord_still_not_defeated:
+            change_event_location "king_lorik" 65 15
+            change_event_visibility "girl_1" 1
+            change_event_visibility "boy_1" 1
+            change_event_visibility "guard_6" 1
+            change_event_visibility "guard_7" 1
+            change_event_visibility "guard_8" 1
+            change_event_visibility "guard_9" 1
+            change_event_visibility "guard_10" 1
+            change_event_visibility "guard_12" 1
+            change_event_visibility "ending_guard_1" 0
+            change_event_visibility "ending_guard_2" 0
+            change_event_visibility "ending_guard_3" 0
+            change_event_visibility "ending_guard_4" 0
+            change_event_visibility "ending_guard_5" 0
+            change_event_visibility "ending_guard_6" 0
+            ; player just died ?
+            if ##player_just_died "==" 1 "lock_player"
+            if_set ##king_lorik_switch_0 "intro_ok_a"
+        lock_player:
+            register_player_trigger_event_on_key_press "king_lorik" "on_event_trigger"
+            set ##player_movement_locked 1
+        intro_ok_a:
+            log "king_lorik on_map_enter"
+            ret
+        map_enter_dragon_lord_defeated:
+            change_event_location "king_lorik" 21 17
+            change_event_visibility "girl_1" 0
+            change_event_visibility "boy_1" 0
+            change_event_visibility "guard_6" 0
+            change_event_visibility "guard_7" 0
+            change_event_visibility "guard_8" 0
+            change_event_visibility "guard_9" 0
+            change_event_visibility "guard_10" 0
+            change_event_visibility "guard_12" 0
+            change_event_visibility "ending_guard_1" 1
+            change_event_visibility "ending_guard_2" 1
+            change_event_visibility "ending_guard_3" 1
+            change_event_visibility "ending_guard_4" 1
+            change_event_visibility "ending_guard_5" 1
+            change_event_visibility "ending_guard_6" 1
+            ret
+
+    on_event_trigger:
+            ; player just died ?
+            if ##player_just_died "==" 1 "player_just_died"
+            if ##game_state_dragon_lord_defeated ">" 0 "ending"
+            if ##game_state_princess_rescued "==" 1 "princess_rescued"
+            if_set ##king_lorik_switch_1 "save_game"
+            if_set ##king_lorik_switch_0 "intro_ok_b"
+            set ##king_lorik_switch_0 1
+            goto "first_time"
+
+        player_just_died:
+                ;@@tantegel_king_33 = Death should not have taken thee, $$player_name .
+                ;@@tantegel_king_34 = I will give thee another chance.
+                ;@@tantegel_king_35 = Now, go, $$player_name !
+                ;@@tantegel_king_36 = Thou hast failed and thou art cursed.
+                ;@@tantegel_king_37 = Leave at once!
+                is_player_cursed "##player_is_cursed"
+                if ##player_is_cursed "==" 1 "player_cursed"
+            player_not_cursed:
+                show_dialog 1 2 @@tantegel_king_33
+                show_dialog 1 2 @@tantegel_king_34
+                show_dialog 1 1 @@tantegel_king_35
+                close_dialog
+                goto "player_just_died_exit"
+            player_cursed:
+                show_dialog 1 2 @@tantegel_king_36
+                show_dialog 1 0 @@tantegel_king_37
+                sleep 1000
+                close_dialog
+                play_sound 19
+                teleport "world" 47 47 "down" 1 "world" 0 0 0 1
+                goto "player_just_died_exit"
+            player_just_died_exit:
+                register_player_trigger_event_on_key_press "" ""
+                set ##player_movement_locked 0
+                set ##player_just_died 0
+                ret
+
+        first_time:
+            register_player_trigger_event_on_key_press "" ""
+            show_dialog 1 2 @@tantegel_king_1
+            show_dialog 1 2 @@tantegel_king_2
+            show_dialog 1 2 @@tantegel_king_3
+            show_dialog 1 2 @@tantegel_king_4
+            show_dialog 1 2 @@tantegel_king_5
+            show_dialog 1 2 @@tantegel_king_6
+            show_dialog 1 2 @@tantegel_king_7
+            show_dialog 1 1 @@tantegel_king_8
+            close_dialog
+            set ##player_movement_locked 0
+            ret
+        
+        intro_ok_b:
+            open_dialog
+            show_dialog 1 1 @@tantegel_king_9
+            close_dialog
+            ret
+
+        save_game:
+                show_player_simplified_status
+
+                if ##player_lv ">=" ##player_last_lv "player_already_last_level"
+            player_can_be_still_stronger:
+                ;@@tantegel_king_10 = I am greatly pleased that thou hast returned, $$player_name .
+                ;@@tantegel_king_11 = Before reaching thy next level of experience thou must gain ##player_xp_for_next_lv .
+                show_dialog 1 2 @@tantegel_king_10
+                show_dialog 1 2 @@tantegel_king_11
+                goto "ask_save_game"
+            player_already_last_level:
+                ;@@tantegel_king_38 = Thou art strong enough! | Why can thou not defeat the Dragonlord?
+                show_dialog 1 2 @@tantegel_king_38
+                goto "ask_save_game"
+
+        ask_save_game:
+                show_dialog 1 0 @@tantegel_king_12
+
+                ; save game ?
+                sleep 250
+                if_option_menu_select 9 3 2 @@option_yes @@option_no "save_yes_label" "save_no_label" "save_no_label"
+
+            save_yes_label:
+                save_game
+
+                ; save success king message
+                ;show_dialog 1 2 @@tantegel_king_13
+
+            save_no_label:
+                ; ask if player want to keep playing
+                show_dialog 1 0 @@tantegel_king_14
+                sleep 250
+                if_option_menu_select 9 3 2 @@option_yes @@option_no "continue_game_yes_label" "continue_game_no_label" "continue_no_label"
+
+            continue_game_no_label:
+                show_dialog 1 1 @@tantegel_king_16
+                close_dialog
+                screen_fade_out
+                sleep 500
+                exit_game
+                ret
+                
+            continue_game_yes_label:
+                show_dialog 1 1 @@tantegel_king_15
+                close_dialog
+                ret
+
+        princess_rescued:
+                show_player_simplified_status
+                ;@@tantegel_king_21 = Forever shall I be grateful for the gift of my daughter returned to her home, $$player_name . | Accept my thanks.
+                ;@@tantegel_king_22 = Now, Gwaelin, come to my side.
+                ;@@tantegel_king_23 = Farewell, $$player_name .
+                show_dialog 1 2 @@tantegel_king_21
+                show_dialog 1 2 @@tantegel_king_22
+
+                change_event_location "princess" 66 16
+                change_event_animation "princess" "right"
+                change_event_visibility "princess" 1
+                set_player_state "normal"
+                change_player_animation $$player_direction
+                force_redraw
+
+                walk_event "princess" "stay"
+                walk_event "princess" "stay"
+                walk_event "princess" "right"
+                walk_event "princess" "stay"
+                walk_event "princess" "right"
+                walk_event "princess" "stay"
+                walk_event "princess" "up"
+                walk_event "princess" "stay"
+                change_event_animation "princess" "down"
+                walk_event "princess" "stay"
+                force_redraw
+
+                ;@@tantegel_princess_1 = | Gwaelin then whispers:
+                ;@@tantegel_princess_2 = Wait a moment, please. | I would give a present to $$player_name .
+                ;@@tantegel_princess_3 = Please accept my love, $$player_name .
+                ;@@tantegel_princess_4 = And I would like to have something of thine--a token.
+                ;@@tantegel_princess_5 = Please give me thy $$princess_exchange_item_name .
+                ;@@tantegel_princess_6 = Even when we two are parted by great distances, I shall be with thee.
+                show_dialog 0 0 @@tantegel_princess_1
+                show_dialog 1 2 @@tantegel_princess_2
+                show_dialog 1 2 @@tantegel_princess_3
+                set #gwaelins_love_item_id 56
+                ; >=0 = itemId 
+                ;  -1 = no more inventory empty slot
+                ;  -2 = you already have maximum allowed number of item
+                can_have_item #gwaelins_love_item_id
+                if #gwaelins_love_item_id "<" 0 "player_inventory_full"
+                goto "princess_rescued_exit"
+            player_inventory_full:
+                remove_first_disposable_item "#first_disposable_item_id" "$$princess_exchange_item_name"
+                show_dialog 1 2 @@tantegel_princess_4
+                show_dialog 1 2 @@tantegel_princess_5
+                goto "princess_rescued_exit"
+            princess_rescued_exit:
+                ; gwaelin's love item (id = 56)
+                add_inventory_item 56
+                show_dialog 1 2 @@tantegel_princess_6
+                show_dialog 1 2 @@tantegel_king_23
+                set ##game_state_princess_rescued 2
+                goto "ask_save_game"
+
+        ending:
+                if ##game_state_princess_rescued "==" 1 "game_end_player_carrying_princess"
+            game_end_player_not_carrying_princess:
+                goto "game_end_player_carrying_princess_continue"
+            game_end_player_carrying_princess:
+                change_event_location "princess" 20 17
+                change_event_animation "princess" "down"
+                change_event_visibility "princess" 1
+                set_player_state "normal"
+                change_player_animation $$player_direction
+                force_redraw
+                goto "game_end_player_carrying_princess_continue"
+            game_end_player_carrying_princess_continue:
+
+                hide_player_simplified_status
+                stop_music
+                ;@@tantegel_king_24 = The legends have proven true.
+                ;@@tantegel_king_25 = Thou art indeed of the line of Erdrick.
+                ;@@tantegel_king_26 = It is thy right to rule over this land.
+                ;@@tantegel_king_27 = Will thou take my place?
+                ;@@tantegel_king_28 = | $$player_name  thought carefully before answering.
+                ;@@tantegel_king_29 = I cannot,
+                ;@@tantegel_king_30 = said $$player_name .
+                ;@@tantegel_king_31 = If ever I am to rule a country, it must be a land that I myself find.
+                ;@@tantegel_king_32 = And thus the tale comes to an end.... | unless the dragons return again.
+                show_dialog 1 2 @@tantegel_king_24
+                show_dialog 1 2 @@tantegel_king_25
+                show_dialog 1 2 @@tantegel_king_26
+                show_dialog 1 2 @@tantegel_king_27
+                show_dialog 0 2 @@tantegel_king_28
+                show_dialog 1 0 @@tantegel_king_29
+                show_dialog 0 2 @@tantegel_king_30
+                show_dialog 1 2 @@tantegel_king_31
+
+            if ##game_state_princess_rescued "==" 2 "game_end_princess_already_in_the_castle"
+            game_end_princess_not_in_the_castle:
+                goto "game_end_princess_in_the_castle_continue"
+            game_end_princess_already_in_the_castle:
+                change_event_location "princess" 17 17
+                change_event_animation "princess" "right"
+                change_event_visibility "princess" 1
+                force_redraw
+                goto "game_end_princess_in_the_castle_continue"
+            game_end_princess_in_the_castle_continue:
+
+            ; check princess saved
+            if ##game_state_princess_rescued "==" 0 "game_end_continue_last_part"
+
+            game_end_continue_with_princess_rescued:
+                ;@@tantegel_princess_9 = Gwaelin said:
+                ;@@tantegel_princess_10 = Please, wait.
+                ;@@tantegel_princess_11 = I wish to go with thee on thy journey.
+                ;@@tantegel_princess_12 = May I travel as thy companion?
+                ;@@tantegel_princess_12_no = But thou must.
+                ;@@tantegel_princess_12_yes = I'm so happy!
+                show_dialog 0 0 @@tantegel_princess_9
+                show_dialog 1 2 @@tantegel_princess_10
+
+            if ##game_state_princess_rescued "==" 2 "game_end_princess_walks_to_kings_side"
+            goto "game_end_princess_location_ok"
+            game_end_princess_walks_to_kings_side:
+                walk_event "princess" "right"
+                walk_event "princess" "stay"
+                walk_event "princess" "right"
+                walk_event "princess" "stay"
+                walk_event "princess" "right"
+                walk_event "princess" "stay"
+                change_event_animation "princess" "down"
+                walk_event "princess" "stay"
+                force_redraw
+            game_end_princess_location_ok:
+                show_dialog 1 2 @@tantegel_princess_11
+            princess_ask_companion:
+                show_dialog 1 0 @@tantegel_princess_12
+                if_option_menu_select 9 3 2 @@option_yes @@option_no "princess_companion_yes_label" "princess_companion_no_label" "princess_companion_no_label"
+            princess_companion_no_label:
+                show_dialog 1 2 @@tantegel_princess_12_no
+                goto "princess_ask_companion"
+            princess_companion_yes_label:
+                change_event_visibility "princess" 0
+                set_player_state "princess"
+                change_player_animation $$player_direction
+                force_redraw
+                show_dialog 1 2 @@tantegel_princess_12_yes
+            game_end_continue_last_part:
+                show_dialog 0 0 ""
+                sleep 100
+                show_dialog 0 0 ""
+                sleep 100
+                show_dialog 0 0 ""
+                sleep 100
+                show_dialog 0 0 ""
+                sleep 100
+                show_dialog 0 0 ""
+                sleep 100
+                show_dialog 0 0 ""
+                sleep 100
+                show_dialog 0 0 ""
+                sleep 100
+                show_dialog 0 0 @@tantegel_king_32
+                sleep 100
+                show_dialog 0 0 ""
+                sleep 100
+                show_dialog 0 0 ""
+                sleep 100
+                show_dialog 0 0 ""
+                sleep 100
+                wait_for_any_key
+                close_dialog
+                sleep 500
+                change_player_animation "down"
+                force_redraw
+                sleep 500
+                play_music "ending"
+                set #buggle_count 7
+            loop_guard_buggle_animation:
+                change_event_animation "ending_guard_1" "buggle_1"
+                change_event_animation "ending_guard_2" "buggle_1"
+                change_event_animation "ending_guard_3" "buggle_1"
+                change_event_animation "ending_guard_4" "buggle_1"
+                change_event_animation "ending_guard_5" "buggle_1"
+                change_event_animation "ending_guard_6" "buggle_1"
+                force_redraw
+                sleep 500
+
+                change_event_animation "ending_guard_1" "buggle_2"
+                change_event_animation "ending_guard_2" "buggle_2"
+                change_event_animation "ending_guard_3" "buggle_2"
+                change_event_animation "ending_guard_4" "buggle_2"
+                change_event_animation "ending_guard_5" "buggle_2"
+                change_event_animation "ending_guard_6" "buggle_2"
+                force_redraw
+                sleep 500
+                sub #buggle_count #buggle_count 1
+                if #buggle_count ">" 0 "loop_guard_buggle_animation"
+
+                screen_fade_out
+                sleep 2000
+                screen_show_image 2 "ending" 0 0 
+                screen_fade_in
+            ending_halt:
+                screen_refresh
+                sleep 100
+                goto "ending_halt"
+
+    ;on_map_exit:
+    ;    set ##king_lorik_switch_1 1
+    ;    log "king_lorik on_map_exit"
+    ;    ret
+
+script_end
+event_end
+
+
+; --- castle ---
+; --------------
+
+;door {event_name} {sprite_id} {pos_col} {pos_row} {persistent}
+;---
+door door_2 22 14 23 false
+door door_3 22 28 16 false
+
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+chest chest_4 11 23 gold_6_13 false
+chest chest_5 12 24 gold_6_13 false
+chest chest_6 11 25 gold_6_13 false
+chest chest_7 13 25 gold_6_13 false
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} \
+;         {map_id} {player_col} {player_row} {player_direction} \
+;         {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;         {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;         {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_2 28 17 17 \
+         tantegel_castle 69 20 left \
+         default_sound true \
+         tantegel false true \
+         false true
+
+teleport teleport_3 29 39 39 \
+         tantegel_castle 97 16 right \
+         default_sound true \
+         tantegel false true \
+         false true
+
+
+; shop_keys {event_name} {pos_col} {pos_row} {key_price}
+;---
+shop_keys shop_keys_1_a 34 12 53
+
+npc shop_keys_1_b 56 34 11 \
+    STATIC down \
+    @@empty
+
+
+;@@tantegel_guard_4 = Welcome to Tantegel Castle.
+;@@tantegel_guard_5 = Welcome to Tantegel Castle.
+;@@tantegel_guard_6 = King Lorik will record thy deeds in his Imperial Scroll so thou may return to thy quest later.
+;@@tantegel_guard_7 = If thou art planning to take a rest, first see King Lorik.
+;@@tantegel_guard_8_a = Where oh where can I find Princess Gwaelin?
+;@@tantegel_guard_8_b = Oh, my dearest Gwaelin! | I hate thee, $$player_name .
+;@@tantegel_guard_9 = When entering the cave, take with thee a torch.
+;@@tantegel_guard_10 = Thou must have a key to open a door.
+;@@tantegel_guard_11 = Never does a brave person steal.
+;@@tantegel_guard_12 = If thy Hit Points are high enough, by all means, enter.
+
+npc guard_4 96 19 37 \
+    STATIC right \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_guard_4
+
+npc guard_5 96 22 37 \
+    STATIC left \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_guard_5
+
+npc guard_6 96 18 16 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_guard_6
+
+npc guard_7 96 18 18 \
+    STATIC up \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_guard_7
+
+npc guard_8 96 25 30 \
+    STATIC right \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ##game_state_princess_rescued > 0 1 @@tantegel_guard_8_b \
+        1 == 1 1 @@tantegel_guard_8_a
+
+npc guard_9 96 25 34 \
+    RANDOM 23 27 8 11 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_guard_9
+
+npc guard_10 96 28 14 \
+    RANDOM 17 10 14 6 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_guard_10
+
+npc guard_11 96 12 22 \
+    RANDOM 11 21 3 5 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_guard_11
+
+npc guard_12 96 36 25 \
+    STATIC up \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_guard_12
+
+;@@tantegel_boy_1 = There was a time when Brecconary was a paradise. | Then the Dragonlord's minions came.
+;@@tantegel_boy_2 = To become strong enough to face future trials thou must first battle many foes.
+
+npc boy_1 8 26 27 \
+    RANDOM 17 20 14 14 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_boy_1
+
+npc boy_2 8 12 18 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_boy_2
+
+
+;@@tantegel_girl_1_a = Where oh where can I find Princess Gwaelin?
+;@@tantegel_girl_1_b = Thank you for saving the Princess.
+;@@tantegel_girl_2_a = When the sun and rain meet, a Rainbow Bridge shall appear.
+;@@tantegel_girl_2_b = It's a legend.
+
+npc girl_1 24 18 23 \
+    RANDOM 11 14 15 15 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ##game_state_princess_rescued > 0 1 @@tantegel_girl_1_b \
+        1 == 1 1 @@tantegel_girl_1_a
+
+npc girl_2 24 37 15 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 2 @@tantegel_girl_2_a @@tantegel_girl_2_b
+
+
+;@@tantegel_merchant_1 = We are merchants who have traveled much in this land. | Many of our colleagues have been killed by servants of the Dragonlord.
+;@@tantegel_merchant_2 = Rumor has it that entire towns have been destroyed by the Dragonlord's servants.
+
+npc merchant_1 56 12 32 \
+    RANDOM 10 29 8 10 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_merchant_1
+
+npc merchant_2 56 16 35 \
+    RANDOM 10 29 8 10 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_merchant_2
+
+
+;@@tantegel_old_man_1 = $$player_name 's coming was foretold by legend. | May the light shine upon this brave warrior.
+;@@tantegel_old_man_3_a = Let us wish the warrior well!
+;@@tantegel_old_man_3_b = May the light be thy strength!
+
+npc old_man_1_a 40 30 36 \
+    STATIC left \
+    @@empty
+
+; --- this old man recovers the player's entire MP
+event old_man_1_b
+animation tileset 6 7 100
+create_animation static 33
+location 29 36  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_event_trigger:
+            show_player_simplified_status
+            show_dialog 1 0 @@tantegel_old_man_1
+            screen_flash 2 5 "0xffffff" 40
+            set ##player_mp ##player_max_mp
+            show_player_simplified_status
+            wait_for_fire_key
+            close_dialog
+            hide_player_simplified_status
+            ret
+script_end
+event_end
+
+npc old_man_3 40 29 23 \
+    RANDOM 26 20 8 6 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@kol_old_man \
+        1 == 1 2 @@tantegel_old_man_3_a @@tantegel_old_man_3_b
+
+
+;@@tantegel_warrior_1 = I am looking for the castle cellar. | I heard it is not easily found.
+;@@tantegel_warrior_2 = In Garinham,look for the grave of Garin. | Thou must push on a wall of darkness there.
+
+npc warrior_1 72 35 20 \
+    RANDOM 26 17 11 9 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_warrior_1
+
+npc warrior_2 72 34 31 \
+    RANDOM 32 30 5 2 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@tantegel_warrior_2
+
+
+; reference: https://www.youtube.com/watch?v=MN8FJvfadFM
+; expels the player from the castle if the player is cursed
+; ---
+event check_player_cursed_1
+animation tileset 6 7 100
+create_animation static 32
+location 20 37  
+movement STATIC
+visible true
+blocked false
+fire_required false
+script
+    on_event_trigger:
+            is_player_cursed "##player_is_cursed"
+            if ##player_is_cursed "==" 1 "player_cursed"
+        player_not_cursed:
+            goto "exit"
+        player_cursed:
+            show_dialog 1 1 @@tantegel_cursed
+            close_dialog
+            play_sound 19
+            teleport "world" 47 47 "down" 1 "world" 0 0 0 1
+            goto "exit"
+        exit:
+            ret
+script_end
+event_end
+
+; reference: https://www.youtube.com/watch?v=MN8FJvfadFM
+; expels the player from the castle if the player is cursed
+; ---
+event check_player_cursed_2
+animation tileset 6 7 100
+create_animation static 32
+location 21 37  
+movement STATIC
+visible true
+blocked false
+fire_required false
+script
+    on_event_trigger:
+            is_player_cursed "##player_is_cursed"
+            if ##player_is_cursed "==" 1 "player_cursed"
+        player_not_cursed:
+            goto "exit"
+        player_cursed:
+            show_dialog 1 1 @@tantegel_cursed
+            close_dialog
+            play_sound 19
+            teleport "world" 47 47 "down" 1 "world" 0 0 0 1
+            goto "exit"
+        exit:
+            ret
+script_end
+event_end
+
+
+; princess
+; ---
+event princess
+animation chars 16 8 100
+create_animation left 82 83
+create_animation up 84 85
+create_animation right 86 87
+create_animation down 80 81
+location 68 15  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_map_enter:
+            if ##game_state_princess_rescued "<" 2 "hide_event"
+            change_event_visibility "princess" 1
+            ret
+        hide_event:
+            change_event_visibility "princess" 0
+            ret
+
+    on_event_trigger:
+            show_player_simplified_status
+            ;@@tantegel_princess_7 = I love thee, $$player_name .
+            ;@@tantegel_princess_8 = Dost thou love me, $$player_name ?
+            ;@@tantegel_princess_8_no = But thou must.
+            ;@@tantegel_princess_8_yes = I'm so happy!
+            if_set #spoke_to_player "spoke_to_player"
+        first_conversation_with_player:
+            show_dialog 1 1 @@tantegel_princess_7
+            set #spoke_to_player 1
+            goto "exit"
+        spoke_to_player:
+            show_dialog 1 0 @@tantegel_princess_8
+            sleep 250
+            if_option_menu_select 9 3 2 @@option_yes @@option_no "yes_label" "no_label" "no_label"
+        yes_label:
+            show_dialog 1 0 @@tantegel_princess_8_yes
+            save_current_music
+            stop_music
+            ; princess rescued sound (id = 28)
+            play_sound 28
+            sleep 7000
+            restore_play_saved_music
+            wait_for_fire_or_esc_key
+            goto "exit"
+        no_label:
+            show_dialog 1 2 @@tantegel_princess_8_no
+            goto "spoke_to_player"
+        exit:
+            hide_player_simplified_status
+            close_dialog
+            ret
+script_end
+event_end
+
+
+; ending guard 1
+; ---
+event ending_guard_1
+animation chars 16 8 100
+create_animation buggle_1 108
+create_animation buggle_2 109
+create_animation right 102 
+location 19 19  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_event_trigger:
+        show_dialog 1 1 @@dragon_lord_defeated_1
+        close_dialog
+        ret
+script_end
+event_end
+
+event ending_guard_2
+animation chars 16 8 100
+create_animation buggle_1 108
+create_animation buggle_2 109
+create_animation right 102 
+location 19 21  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_event_trigger:
+        show_dialog 1 1 @@dragon_lord_defeated_1
+        close_dialog
+        ret
+script_end
+event_end
+
+event ending_guard_3
+animation chars 16 8 100
+create_animation buggle_1 108
+create_animation buggle_2 109
+create_animation right 102 
+location 19 23  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_event_trigger:
+        show_dialog 1 1 @@dragon_lord_defeated_1
+        close_dialog
+        ret
+script_end
+event_end
+
+event ending_guard_4
+animation chars 16 8 100
+create_animation buggle_1 104
+create_animation buggle_2 105
+create_animation left 98 
+location 22 19  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_event_trigger:
+        show_dialog 1 1 @@dragon_lord_defeated_1
+        close_dialog
+        ret
+script_end
+event_end
+
+event ending_guard_5
+animation chars 16 8 100
+create_animation buggle_1 104
+create_animation buggle_2 105
+create_animation left 98 
+location 22 21  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_event_trigger:
+        show_dialog 1 1 @@dragon_lord_defeated_1
+        close_dialog
+        ret
+script_end
+event_end
+
+event ending_guard_6
+animation chars 16 8 100
+create_animation buggle_1 104
+create_animation buggle_2 105
+create_animation left 98 
+location 22 23  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_event_trigger:
+        show_dialog 1 1 @@dragon_lord_defeated_1
+        close_dialog
+        ret
+script_end
+event_end
+
+
+; forces player to walk in front of the king if dragonlord was defeated
+; ---
+event game_end_force_player_walk_in_front_of_king_1
+animation tileset 6 7 100
+create_animation static 41
+location 20 18  
+movement STATIC
+visible true
+blocked false
+fire_required false
+script
+    on_map_enter:
+            ; dragon lord defeated ?
+            if ##game_state_dragon_lord_defeated ">" 0 "map_enter_dragon_lord_defeated"
+        map_enter_dragon_lord_still_not_defeated:
+            change_event_visibility "game_end_force_player_walk_in_front_of_king_1" 0
+            ret
+        map_enter_dragon_lord_defeated:
+            change_event_visibility "game_end_force_player_walk_in_front_of_king_1" 1
+            ret
+
+    on_event_trigger:
+        walk_event "player" "right"
+        change_player_direction "up"
+        ret
+script_end
+event_end
+
+; forces player to walk in front of the king if dragonlord was defeated
+; ---
+event game_end_force_player_walk_in_front_of_king_2
+animation tileset 6 7 100
+create_animation static 41
+location 22 18  
+movement STATIC
+visible true
+blocked false
+fire_required false
+script
+    on_map_enter:
+            ; dragon lord defeated ?
+            if ##game_state_dragon_lord_defeated ">" 0 "map_enter_dragon_lord_defeated"
+        map_enter_dragon_lord_still_not_defeated:
+            change_event_visibility "game_end_force_player_walk_in_front_of_king_2" 0
+            ret
+        map_enter_dragon_lord_defeated:
+            change_event_visibility "game_end_force_player_walk_in_front_of_king_2" 1
+            ret
+
+    on_event_trigger:
+        walk_event "player" "left"
+        change_player_direction "up"
+        ret
+script_end
+event_end
+
+
+; --- basement --- 
+; ----------------
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+; stone of sunlight (id = 55)
+chest chest_8 100 17 55 false
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} \
+;         {map_id} {player_col} {player_row} {player_direction} \
+;         {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;         {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;         {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_4 28 96 16 \
+         tantegel_castle 39 38 left \
+         default_sound true \
+         tantegel false true \
+         false true
+
+
+;@@tantegel_old_man_2_a = I have been waiting long for one such as thee.
+;@@tantegel_old_man_2_b = Take the Treasure Chest.
+;@@tantegel_old_man_2_c = Thou hast no business here. | Go away.
+
+npc old_man_2 40 100 18 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@tantegel_old_man \
+        ##player_item_55 > 0 1 @@tantegel_old_man_2_c \
+        1 == 1 2 @@tantegel_old_man_2_a @@tantegel_old_man_2_b

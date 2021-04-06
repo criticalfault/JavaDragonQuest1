@@ -1,0 +1,169 @@
+; --- overworld --- 
+; -----------------
+
+; item_on_ground {event_id} {pos_col} {pos_row} {item_id} {persistent->true/false}
+; ---
+; erdrick's token item (id = 57)
+item_on_ground item_erdricks_token 87 117 57 false
+
+
+;teleport {event_id} {sprite_id} {pos_col} {pos_row} \
+;         {map_id} {player_col} {player_row} {player_direction} \
+;         {sound_id|no_sound|default_sound} {use_fade_effect->true|false]
+;         {musicId} {isDark->true|false} {repelHasNoEffect->true|false} 
+;         {resetRepel->true|false] {resetLight->true|false]
+;---
+teleport teleport_1 11 52 45 \
+         brecconary 10 25 right \
+         default_sound true \
+         town false true \
+         false true
+
+teleport teleport_2 11 77 106 \
+         cantlin 26 11 down \
+         default_sound true \
+         town false true \
+         false true
+
+teleport teleport_3 10 52 52 \
+         charlock_castle 22 31 right \
+         default_sound true \
+         dungeon false true \
+         false true
+
+teleport teleport_4 5 32 16 \
+         erdricks_cave 13 12 right \
+         default_sound true \
+         dungeon true true \
+         false true
+
+teleport teleport_5 11 6 6 \
+         garinham 9 24 right \
+         default_sound true \
+         town false true \
+         false true
+
+teleport teleport_6 11 29 93 \
+         hauksness 10 20 right \
+         default_sound true \
+         dungeon false true \
+         false true
+
+teleport teleport_7 11 108 14 \
+         kol 19 23 up \
+         default_sound true \
+         town false true \
+         false true
+
+teleport teleport_8 11 106 76 \
+         rimuldar 40 24 left \
+         default_sound true \
+         town false true \
+         false true
+         
+teleport teleport_9 5 33 61 \
+         rock_mountain_cave 13 19 right \
+         default_sound true \
+         dungeon true true \
+         false true
+
+teleport teleport_10 29 85 5 \
+         shrine 17 21 right \
+         default_sound true \
+         tantegel false true \
+         false true
+
+teleport teleport_11 29 112 113 \
+         shrine 47 16 right \
+         default_sound true \
+         tantegel false true \
+         false true
+
+teleport teleport_12 5 108 48 \
+         swamp_cave 12 12 right \
+         default_sound true \
+         dungeon true true \
+         false true
+
+teleport teleport_13 5 108 53 \
+         swamp_cave 13 41 right \
+         default_sound true \
+         dungeon true true \
+         false true
+
+teleport teleport_14 10 47 47 \
+         tantegel_castle 21 39 up \
+         default_sound true \
+         tantegel false true \
+         false true
+
+
+; golem - guards at the outskirts of the town of cantlin.
+; note: it's necessary to defeat the golem just once.
+; ---
+event cantlin_guardian_enemy
+animation tileset 6 7 100
+create_animation static 41
+location 77 104  
+movement STATIC
+visible true
+blocked false
+fire_required false
+script
+    on_map_enter:
+            if ##game_state_dragon_lord_defeated "!=" 0 "hide_event"
+            if_set ##cantlin_guardian_enemy_defeated "hide_event"
+            change_event_visibility "cantlin_guardian_enemy" 1
+            ret
+        hide_event:
+            change_event_visibility "cantlin_guardian_enemy" 0
+            ret
+
+    on_event_trigger:
+            if_set ##cantlin_guardian_enemy_defeated "exit"
+            ; golem (id = 24)
+            ; start_battle {"battle_result_global_var"} {enemy_id} {tile_id} {player_cant_run->1=true|0=false} {enemy_will_not_run->1=true|0=false} {music_id}
+            ; return result = 0 -> player is dead
+            ;                 1 -> player battle win
+            ;                 2 -> player ran away
+            ;                 3 -> enemy ran away
+            start_battle "##battle_result" 24 0 0 1 "boss"
+            if ##battle_result "==" 0 "exit"
+            if ##battle_result "==" 1 "enemy_defeated"
+        enemy_not_defeated:
+            walk_event "player" "up"
+            ;walk_event "player" "stay"
+            change_player_animation "down"
+            goto "exit"
+        enemy_defeated:
+            set ##cantlin_guardian_enemy_defeated 1
+            goto "exit"
+        exit:
+            ret
+script_end
+event_end
+
+
+; bridge (created by rainbow drop item)
+; ---
+event bridge
+animation tileset 6 7 100
+create_animation static 19
+location 68 51  
+movement STATIC
+visible true
+blocked true
+fire_required true
+script
+    on_map_enter:
+            if_set ##rainbow_drop_bridge_created "show_bridge"
+        hide_bridge:
+            change_tile 68 53 21
+            ret
+        show_bridge:
+            change_tile 68 53 9
+            ret
+script_end
+event_end
+
+

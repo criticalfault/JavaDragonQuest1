@@ -1,0 +1,571 @@
+# empty
+# -----
+@@empty = .
+
+
+# option
+# ------
+@@option_yes = Yes
+@@option_no = No
+
+
+# ol presents
+# -----------
+@@presents = PRESENTS
+
+
+# title
+# ------
+@@title_option_start = START
+@@title_option_continue = CONTINUE
+@@title_keyboard_1 = About keyboard controls, please use:
+@@title_keyboard_2 = 'X' key to CONFIRM
+@@title_keyboard_3 = 'Z' key to CANCEL
+@@title_keyboard_4 = Note: the only exception is when you start a new game and need to type your name, then use ENTER key to confirm or ESC key to cancel.
+@@title_keyboard_5 = X - Confirm
+@@title_keyboard_6 = Z - Cancel
+
+
+# game save / load
+# ----------------
+@@game_save_confirmation = Do you want to save this game?
+@@game_select_save_file = Select the file you want to write to.
+@@game_save_file_confirmation = Are you sure you want to save this game to file ##file_number ?
+@@game_saved_successfully = File ##file_number  successfully saved.
+@@game_save_error = It was not possible to save file ##file_number !
+
+@@game_load_confirmation = Do you want to load a saved game?
+@@game_select_load_file = Select the file you want to load.
+@@game_load_file_confirmation = Are you sure you want to load the file ##file_number ?
+@@game_loaded_successfully = File ##file_number  successfully loaded.
+@@game_load_error = It was not possible to load the file ##file_number !
+
+
+# map menu
+# --------
+@@map_menu_item = ITEM
+@@map_menu_equip = EQUIP
+@@map_menu_spell = SPELL
+@@map_menu_status = STATUS
+@@map_menu_config = CONFIG
+@@map_menu_load_game = LOAD
+@@map_menu_quit = QUIT
+@@map_menu_quit_confirmation = Are you sure?
+
+
+# game config
+# -----------
+@@game_config_option_msg_speed_1 = MSG
+@@game_config_option_msg_speed_2 = SPEED
+@@game_config_option_battle_speed_1 = BATTLE
+@@game_config_option_battle_speed_2 = SPEED
+@@game_config_option_sound_vol_1 = SOUND
+@@game_config_option_sound_vol_2 = VOL
+@@game_config_option_music_vol_1 = MUSIC
+@@game_config_option_music_vol_2 = VOL
+
+
+# battle menu
+# -----------        
+@@battle_menu_command = COMMAND
+@@battle_menu_fight = FIGHT
+@@battle_menu_run = RUN
+@@battle_menu_spell = SPELL
+@@battle_menu_item = ITEM
+
+
+# player status
+# -------------
+@@player_status_complete_name = NAME
+@@player_status_complete_strength = STRENGTH
+@@player_status_complete_agility = AGILITY
+@@player_status_complete_max_hp = MAXIMUM HP
+@@player_status_complete_max_mp = MAXIMUM MP
+@@player_status_complete_atk = ATTACK POWER
+@@player_status_complete_def = DEFENSE POWER
+@@player_status_complete_weapon = WEAPON
+@@player_status_complete_armor = ARMOR
+@@player_status_complete_shield = SHIELD
+@@player_status_complete_time = TIME
+
+
+# door
+# ----
+@@door_player_has_not_keys = Thou hast not a key to use.
+
+
+# battle
+# ------
+@@battle_ask_command = Command?
+@@battle_player_attacks = $$player_name  attacks!
+@@battle_player_attacks_miss = The attack failed and there was no loss of Hit Points!
+@@battle_player_critical_attack = Excellent move!
+@@battle_player_damage = The $$player_name 's Hit Points have been reduced by $$battle_damage .
+@@battle_player_dodged = The $$player_name  dodged enemy's attack.
+@@battle_player_runaway = $$player_name  started to run away.
+@@battle_player_runaway_fail = But was blocked in front.
+@@battle_player_still_asleep = Thou art still asleep.
+@@battle_player_wokeup = $$player_name  awakes.
+@@battle_player_dead = Thou art dead.
+@@battle_player_sleep_spell_success = Thou hast put the $$enemy_name  to sleep.
+@@battle_player_level_up_1 = Courage and wit have served thee well.
+@@battle_player_level_up_2 = Thou hast been promoted to the next level.
+@@battle_player_level_up_str = Thy power increases by ##battle_level_up_increased_str .
+@@battle_player_level_up_agi = Thy Response Speed increases by ##battle_level_up_increased_agi .
+@@battle_player_level_up_hp = Thy Maximum Hit Points increase by ##battle_level_up_increased_hp .
+@@battle_player_level_up_mp = Thy Maximum Magic Points increase by ##battle_level_up_increased_mp .
+@@battle_player_learned_new_spell = Thou hast learned a new spell.
+
+@@battle_enemy_attacks = $$enemy_name  attacks!
+@@battle_enemy_attacks_miss = A miss! No damage hath been scored!
+@@battle_enemy_damage = The $$enemy_name 's Hit Points have been reduced by $$battle_damage .
+@@battle_enemy_dodged = It is dodging!
+@@battle_enemy_appears = A $$enemy_name  draws near!
+@@battle_enemy_initiative = The $$enemy_name  attacked before $$player_name  was ready.
+@@battle_enemy_escaped = The $$enemy_name  is running away.
+@@battle_enemy_asleep = | The $$enemy_name  is asleep.
+@@battle_enemy_wokeup = $$enemy_name  hath woken up.
+@@battle_enemy_defeated = Thou hast done well in defeating the $$enemy_name .
+@@battle_enemy_cast_spell = $$enemy_name  chanted the spell of $$battle_spell_name .
+@@battle_enemy_cast_sleep_success = Thou art asleep.
+@@battle_enemy_cast_stop_spell_success = $$player_name 's spell is blocked.
+@@battle_enemy_breathing_fire = The <enemy> is breathing fire.
+@@battle_enemy_recovered = The $$enemy_name  hath recovered.
+
+@@battle_won_xp = Thy Experience increases by $$enemy_xp .
+@@battle_won_gp = Thy GOLD increses by $$enemy_gp .
+
+
+# spells
+# ------
+@@player_cast_spell = $$player_name  chanted the spell of $$casting_spell_name .
+@@player_cannot_use_spell_yet = $$player_name  cannot yet use the spell.
+@@player_mp_too_low = Thy MP is too low.
+@@player_cast_spell_but_nothing_happened = | But nothing happened.
+@@spell_cant_use_in_battle = That cannot be used in battle.
+@@spell_cant_use_in_field = That cannot be used in field.
+@@spell_will_not_work = The spell will not work.
+@@spell_sleep_success = Thou hast put the $$enemy_name  to sleep.
+@@spell_stop_spell_success = The $$enemy_name 's spell hath been blocked.
+@@spell_blocked = But that spell hath been blocked.
+
+
+# items
+# -----
+@@player_items_empty = Nothing of use has yet been given to thee.
+@@torch_only_dark_places = A torch can be used only in dark places.
+@@item_cant_use_in_battle = That cannot be used in battle.
+@@item_cant_use_in_field = That cannot be used in field.
+@@player_used_item_but_nothing_happened = | But nothing happened.
+@@item_herb_used = $$player_name  used the Herb.
+@@item_fairy_water_used = $$player_name  sprinkled the Fairy Water over his body.
+@@item_wings_used = $$player_name  threw The Wings of the Wyvern up into the sky.
+@@item_wings_cant_use = The Wings of the Wyvern cannot be used here.
+@@item_fairy_flute_used = $$player_name  blew the Fairies' Flute.
+@@item_fairy_flute_success = Quietly Golem closes his eyes and settles into sleep.
+@@item_gwaelins_love_used_1 = Heed my voice,
+@@item_gwaelins_love_used_2 = $$player_name , for this is Gwaelin. | To reach the next level thou must raise thy Experience Points by ##player_xp_for_next_lv . | My hope is with thee.
+@@item_gwaelins_love_used_3 = From where thou art now, my castle lies ##castle_ns_distance  to the $$castle_ns  and ##castle_we_distance  to the $$castle_we .
+@@item_gwaelins_love_used_4 = I love thee, $$player_name .
+@@item_gwaelins_love_used_5 = $$player_name ? | This is Gwaelin. | Know that thou hath reached the final level.
+@@item_silver_harp_used = $$player_name  played a sweet melody on the harp.
+@@item_silver_harp_result_when_battle = | $$enemy_name  looks happy.
+@@player_help_item = $$player_name  held the $$held_item_name  tightly.
+@@item_rainbow_drop_used = $$player_name  held the Rainbow Drop toward the sky.
+@@item_rainbow_drop_failed = | But no rainbow appeared here.
+@@item_dragon_scale_used_1 = $$player_name  donned the scale of the dragon.
+@@item_dragon_scale_used_2 = Thou art already wearing the scale of the dragon.
+@@item_fighters_ring_used_1 = $$player_name  put on the Fighter's Ring.
+@@item_fighters_ring_used_2 = $$player_name  adjusted the position of the Fighter's Ring.
+@@item_magic_key_failed = There is no door here.
+
+
+# repel
+# -----
+@@repel_lost_effect = $$player_repel_source  has lost its effect.
+
+
+# cursed items
+# ------------
+@@cursed_item_1 = $$player_name  put on the $$cursed_item_name  and was cursed!.
+@@cursed_item_2 = | Thy body is being squeezed.
+@@cursed_item_3 = The $$cursed_item_name  is squeezing thy body.
+@@cursed_item_4 = | A curse is upon thy body.
+@@cursed_item_5 = I am sorry.
+
+
+# chest
+# -----
+@@chest_found_gold = Of GOLD thou hast gained ##chest_gold
+@@chest_found_item_1 = Fortune smiles upon thee, $$player_name .
+@@chest_found_item_2 = Thou hast found the $$chest_item_name .
+@@chest_empty = Unfortunately, it is empty.
+@@chest_inventory_full = If thou would take the $$chest_item_name , thou must now discard some other item. | Dost thou wish to have the $$chest_item_name ?
+@@chest_give_up = Thou hast given up thy $$chest_item_name . 
+@@chest_what_drop = What shall thou drop?
+@@chest_cant_drop = That is much too important to throw away.
+@@chest_drop_confirmation = Thou hast dropped thy $$chest_drop_item_name . | And obtained the $$chest_item_name .
+
+
+# item on ground
+# --------------
+@@item_on_ground = $$player_name  searched the ground all about.
+@@item_on_ground_found = $$player_name  discovers the $$item_on_ground_item_name .
+@@item_on_ground_empty = But there found nothing.
+@@item_on_ground_cant_carry_anymore = But $$player_name  cannot carry more items.
+
+
+# erdrick's tablet
+# ----------------
+@@item_erdricks_tablet_1 = | The tablet reads as follows:
+@@item_erdricks_tablet_2 = I am Erdrick and thou art my descendant.
+@@item_erdricks_tablet_3 = Three items were needed to reach the Isle of Dragons, which is south of Brecconary.
+@@item_erdricks_tablet_4 = I gathered these items, reached the island, and there defeated a creature of great evil.
+@@item_erdricks_tablet_5 = Now I have entrusted the three items to three worthy keepers.
+@@item_erdricks_tablet_6 = Their descendants will protect the items until thy quest leads thee to seek them out.
+@@item_erdricks_tablet_7 = When a new evil arises, find the three items, then fight!
+
+
+# shop items/equip
+# ----------------
+@@shop_buy = BUY
+@@shop_sell = SELL
+
+@@shop_items_welcome = Welcome. | We deal in tools. | What can I do for thee?
+@@shop_items_what_you_want = What dost thou want?
+@@shop_items_buy_confirmed = The $$shop_item_name ? | Thank you very much.
+@@shop_items_anything_else = Dost thou want anything else?
+@@shop_bye = I will be waiting for thy next visit.
+@@shop_no_enough_money = Thou hast not enough money.
+@@shop_slot_not_available = Thou cannot carry anymore.
+@@shop_items_already_max_size = Thou cannot hold more $$shop_item_name .
+@@shop_what_sell = What art thou selling?
+@@shop_nothing_to_sell = Thou hast no possessions.
+@@shop_sell_anything_else = Wilt thou sell anything else?
+@@shop_cant_sell_item = I cannot buy it.
+@@shop_sell_confirmation = Thou said the $$shop_item_name . | I will buy thy $$shop_item_name  for ##shop_item_sell_price  GOLD. | Is that all right?
+
+@@shop_weapon_armor_welcome = We deal in weapons and armor. | Dost thou wish to buy anything today?
+@@shop_weapon_armor_what_you_want = What dost thou wish to buy?
+@@shop_cant_buy_equip = The $$shop_item_name ? | But I cannot buy thy $$sell_item_name . | Sorry.
+@@shop_weapon_armor_buy_confirmation_1 = The $$shop_item_name ?
+@@shop_weapon_armor_buy_confirmation_2 = Then I will buy thy $$shop_current_equip  for ##shop_current_equip_price  GOLD.
+@@shop_weapon_armor_buy_confirmation_3 = Is that Okay.?
+@@shop_weapon_armor_buy_confirmation_no = Oh, yes? | That's too bad.
+@@shop_weapon_armor_no_enough_money = Sorry. | Thou hast not enough money.
+@@shop_weapon_armor_anything_else = Dost thou wish to buy anything more?
+@@shop_weapon_armor_thanks = I thank thee.
+@@shop_weapon_armor_bye = Please, come again.
+
+
+# shop keys
+# ---------
+@@shop_keys_welcome = Magic keys! | They will unlock any door. | Dost thou wish to purchase one for ##shop_key_price  GOLD?
+@@shop_keys_purchased = Here,take this key. | Dost thou wish to purchase more?
+@@shop_keys_no_enough_money = Sorry. | Thou hast not enough money.
+@@shop_keys_cant_sell_anymore = I am sorry, but I cannot sell thee anymore.
+@@shop_keys_bye = I will see thee later.
+
+
+# shop fairy water
+# ----------------
+@@shop_fairy_water = Will thou buy some Fairy Water for ##shop_fairy_water_price  GOLD to keep the Dragonlord's minions away?
+@@shop_fairy_water_purchased = I thank thee. | Won't thou buy one more bottle?
+@@shop_fairy_water_no_enough_money = Sorry. | Thou hast not enough money.
+@@shop_fairy_water_cannot_carry_anymore = Thou cannot carry anymore.
+@@shop_fairy_water_bye = All the best to thee.
+
+
+# Inn
+# ---
+@@inn_welcome = Welcome to the traveler's Inn. | Room and board is ##inn_price  GOLD per night. | Dost thou want a room?
+@@inn_yes_1 = Good night.
+@@inn_yes_2 = Good morning. | Thou seems to have spent a good night.
+@@inn_yes_3 = I shall see thee again.
+@@inn_yes_4 = Good morning. | Thou hast had a good night's sleep I hope.
+@@inn_no = Okay. | Good-bye, traveler.
+@@inn_no_enough_money = Thou hast not enough money.
+
+
+# game state
+# ----------
+@@dragon_lord_defeated_1 = Hurrah! | Hurrah! | Long live $$player_name !
+
+
+# tantegel castle - throne room 
+# -----------------------------
+@@tantegel_king_1 = Descendant of Erdrick, listen now to my words.
+@@tantegel_king_2 = It is told that in ages past Erdrick fought demons with a Ball of Light.
+@@tantegel_king_3 = Then came the Dragonlord who stole the precious globe and hid it in the darkness.
+@@tantegel_king_4 = Now, $$player_name , thou must help us recover the Ball of Light and restore peace to our land.
+@@tantegel_king_5 = The Dragonlord must be defeated.
+@@tantegel_king_6 = Take now whatever thou may find in these Treasure Chests to aid thee in thy quest.
+@@tantegel_king_7 = Then speak with the guards, for they have much knowledge that may aid thee.
+@@tantegel_king_8 = May the light shine upon thee, $$player_name .
+@@tantegel_king_9 = When thou art finished preparing for thy departure, please see me. | I shall wait.
+@@tantegel_king_10 = I am greatly pleased that thou hast returned, $$player_name .
+@@tantegel_king_11 = Before reaching thy next level of experience thou must gain ##player_xp_for_next_lv .
+@@tantegel_king_12 = Will thou tell me now of thy deeds so they won't be forgotten?
+@@tantegel_king_13 = Thy deeds have been recorded on the Imperial Scrolls of Honor.
+@@tantegel_king_14 = Dost thou wish to continue thy quest?
+@@tantegel_king_15 = Goodbye now, $$player_name . Take care and tempt not the Fates.
+@@tantegel_king_16 = Rest then for awhile.
+@@tantegel_king_15 = Goodbye now, $$player_name . | Take care and tempt not the Fates.
+@@tantegel_king_18 = Unfortunately, NO deeds were recorded on Imperial Scroll number <number>.
+@@tantegel_king_19 = Please push RESET, hold it in, then turn off the POWER.
+@@tantegel_king_20 = If you turn the power off first, the Imperial Scroll of Honor containing your deeds may be lost.
+@@tantegel_king_21 = Forever shall I be grateful for the gift of my daughter returned to her home, $$player_name . | Accept my thanks.
+@@tantegel_king_22 = Now, Gwaelin, come to my side.
+@@tantegel_king_23 = Farewell, $$player_name .
+# ending
+@@tantegel_king_24 = The legends have proven true.
+@@tantegel_king_25 = Thou art indeed of the line of Erdrick.
+@@tantegel_king_26 = It is thy right to rule over this land.
+@@tantegel_king_27 = Will thou take my place?
+@@tantegel_king_28 = | $$player_name  thought carefully before answering.
+@@tantegel_king_29 = I cannot,
+@@tantegel_king_30 = said $$player_name .
+@@tantegel_king_31 = If ever I am to rule a country, it must be a land that I myself find.
+@@tantegel_king_32 = And thus the tale comes to an end.... | unless the dragons return again.
+# player died / cursed
+@@tantegel_king_33 = Death should not have taken thee, $$player_name .
+@@tantegel_king_34 = I will give thee another chance.
+@@tantegel_king_35 = Now, go, $$player_name !
+@@tantegel_king_36 = Thou hast failed and thou art cursed.
+@@tantegel_king_37 = Leave at once!
+# player last level
+@@tantegel_king_38 = Thou art strong enough! | Why can thou not defeat the Dragonlord?
+# game loaded
+@@tantegel_king_39 = I am glad thou hast returned. | All our hopes are riding on thee.
+@@tantegel_king_40 = See me again when thy level has increased.
+
+@@tantegel_princess_1 = | Gwaelin then whispers:
+@@tantegel_princess_2 = Wait a moment, please. | I would give a present to $$player_name .
+@@tantegel_princess_3 = Please accept my love, $$player_name .
+@@tantegel_princess_4 = And I would like to have something of thine--a token.
+@@tantegel_princess_5 = Please give me thy $$princess_exchange_item_name .
+@@tantegel_princess_6 = Even when we two are parted by great distances, I shall be with thee.
+@@tantegel_princess_7 = I love thee, $$player_name .
+@@tantegel_princess_8 = Dost thou love me, $$player_name ?
+@@tantegel_princess_8_no = But thou must.
+@@tantegel_princess_8_yes = I'm so happy!
+# ending
+@@tantegel_princess_9 = | Gwaelin said:
+@@tantegel_princess_10 = Please, wait.
+@@tantegel_princess_11 = I wish to go with thee on thy journey.
+@@tantegel_princess_12 = May I travel as thy companion?
+@@tantegel_princess_12_no = But thou must.
+@@tantegel_princess_12_yes = I'm so happy!
+
+@@tantegel_guard_1_a = Dost thou know about Princess Gwaelin?
+@@tantegel_guard_1_b = Half a year now hath passed since the Princess was kidnapped by the enemy.
+@@tantegel_guard_1_c = Never does the King speak of it, but he must be suffering much.
+@@tantegel_guard_1_d = $$player_name , please save the Princess.
+@@tantegel_guard_1_e = Oh, brave $$player_name .
+@@tantegel_guard_2_a = East of this castle is a town where armor, weapons, and many other items may be purchased.
+@@tantegel_guard_2_b = Return to the Inn for a rest if thou art wounded in battle, $$player_name .
+@@tantegel_guard_2_c = Sleep heals all.
+@@tantegel_guard_2_d = A word of advice.
+@@tantegel_guard_2_e = Save thy money for more expensive armor.
+@@tantegel_guard_3_a = If thou hast collected all the Treasure Chests, a key will be found.
+@@tantegel_guard_3_b = Once used, the key will disappear, but the door will be open and thou may pass through.
+@@tantegel_guard_3_c = Listen to what people say. | It can be of great help.
+
+
+# tantegel castle
+# ---------------
+@@tantegel_guard_4 = Welcome to Tantegel Castle.
+@@tantegel_guard_5 = Welcome to Tantegel Castle.
+@@tantegel_guard_6 = King Lorik will record thy deeds in his Imperial Scroll so thou may return to thy quest later.
+@@tantegel_guard_7 = If thou art planning to take a rest, first see King Lorik.
+@@tantegel_guard_8_a = Where oh where can I find Princess Gwaelin?
+@@tantegel_guard_8_b = Oh, my dearest Gwaelin! | I hate thee, $$player_name .
+@@tantegel_guard_9 = When entering the cave, take with thee a torch.
+@@tantegel_guard_10 = Thou must have a key to open a door.
+@@tantegel_guard_11 = Never does a brave person steal.
+@@tantegel_guard_12 = If thy Hit Points are high enough, by all means, enter.
+@@tantegel_boy_1 = There was a time when Brecconary was a paradise. | Then the Dragonlord's minions came.
+@@tantegel_boy_2 = To become strong enough to face future trials thou must first battle many foes.
+@@tantegel_girl_1_a = Where oh where can I find Princess Gwaelin?
+@@tantegel_girl_1_b = Thank you for saving the Princess.
+@@tantegel_girl_2_a = When the sun and rain meet, a Rainbow Bridge shall appear.
+@@tantegel_girl_2_b = It's a legend.
+@@tantegel_merchant_1 = We are merchants who have traveled much in this land. | Many of our colleagues have been killed by servants of the Dragonlord.
+@@tantegel_merchant_2 = Rumor has it that entire towns have been destroyed by the Dragonlord's servants.
+@@tantegel_old_man_1 = $$player_name 's coming was foretold by legend. | May the light shine upon this brave warrior.
+@@tantegel_old_man_2_a = I have been waiting long for one such as thee.
+@@tantegel_old_man_2_b = Take the Treasure Chest.
+@@tantegel_old_man_2_c = Thou hast no business here. | Go away.
+@@tantegel_old_man_3_a = Let us wish the warrior well!
+@@tantegel_old_man_3_b = May the light be thy strength!
+@@tantegel_warrior_1 = I am looking for the castle cellar. | I heard it is not easily found.
+@@tantegel_warrior_2 = In Garinham,look for the grave of Garin. | Thou must push on a wall of darkness there.
+@@tantegel_cursed = Cursed one, be gone!
+
+
+# brecconary
+# ----------
+@@brecconary_boy_1 = Thou art most welcome in Brecconary.
+@@brecconary_boy_2 = Go north to the seashore, then follow the coastline west until thou hath reached Garinham.
+@@brecconary_boy_3 = There is a town where magic keys can be purchased.
+@@brecconary_boy_4 = Enter where thou can.
+@@brecconary_boy_5_a = Within sight of Tantegel Castle to the south is Charlock,
+@@brecconary_boy_5_b = The fortress of the Dragonlord.
+@@brecconary_girl_1 = Welcome! | Enter the shop and speak to its keeper across the desk.
+@@brecconary_girl_2 = No,I am not Princess Gwaelin.
+@@brecconary_old_man_1 = Watch thy Hit Points when in the Poisonous Marsh.
+@@brecconary_old_man_2_a = If thou art cursed, come again.
+@@brecconary_old_man_2_b = I will free thee from thy curse.
+@@brecconary_old_man_2_c = Now, go.
+@@brecconary_guard_1_a = Tell King Lorik that the search for his daughter hath failed.
+@@brecconary_guard_1_b = I am almost gone....
+@@brecconary_guard_1_c = Who touches me? | I see nothing, nor can I hear.
+@@brecconary_guard_2 = See King Lorik when thy experience levels are raised.
+@@brecconary_warrior_1_a = Many have been the warriors who have perished on this quest.
+@@brecconary_warrior_1_b = But for thee I wish success, $$player_name .
+@@brecconary_warrior_2_a = Beware the bridges!
+@@brecconary_warrior_2_b = Danger grows when thou crosses.
+@@brecconary_warrior_3 = Art thou the descendant of Erdrick? | Hast thou any proof?
+@@brecconary_warrior_4 = Some say that Garin's grave is home to a Silver Harp.
+@@brecconary_merchant_1 = Please,save us from the minions of the Dragonlord.
+
+
+# garinham
+# --------
+@@garinham_old_man_1 = Many believe that Princess Gwaelin is hidden away in a cave.
+@@garinham_old_man_2 = Garin, a wandering minstrel of legendary fame, is said to have built this town.
+@@garinham_old_man_3 = They say that Erdrick's armor was hidden long ago.
+@@garinham_old_man_4 = The harp attracts enemies. | Stay away from the grave in Garinham.
+@@garinham_girl_1 = Welcome to Garinham. | May thy stay be a peaceful one.
+@@garinham_girl_2 = I hate people! | Go! Leave me!
+@@garinham_warrior_1 = I have heard of one named Nester. | Dost thou know such a one?
+@@garinham_boy_1 = It is said that the Princess was kidnapped and taken eastward.
+@@garinham_boy_2 = Once there was a town called Hauksness far to the south, but I do not know if it still exists.
+@@garinham_merchant_1 = I suggest making a map if thy path leads into the darkness.
+@@garinham_guard_1 = I'm too busy. | Ask the other guard.
+@@garinham_guard_2 = I'm too busy. | Ask the other guard.
+
+
+# kol
+# ---
+@@kol_old_man_1 = This is the village of Kol.
+@@kol_old_man_2 = In legends it is said that fairies know how to put Golem to sleep.
+@@kol_old_man_3_a = Though thou art as brave as thy ancestor, $$player_name , thou cannot defeat the great Dragonlord with such weapons.
+@@kol_old_man_3_b = Thou shouldst come here again.
+@@kol_old_man_3_c = Finally thou hast obtained it, $$player_name .
+@@kol_old_man_4 = Hast thou found the flute?
+@@kol_old_man_4_no = Howard had it, but he went to Rimuldar and never returned.
+@@kol_old_man_4_yes = Go to the town of Cantlin.
+@@kol_boy_1_a = Dreadful is the South Island.
+@@kol_boy_1_b = Great strength and skill and wit only will bring thee back from that place.
+@@kol_boy_2 = Art thou the descendant of Erdrick? | Hast thou any proof?
+@@kol_guard_1 = Golem is afraid of the music of the flute, so 'tis said.
+@@kol_guard_2 = Rimuldar is the place to buy keys.
+@@kol_girl_1 = Please, save us from the minions of the Dragonlord.
+@@kol_girl_2 = This bath cures rheumatism.
+@@kol_warrior_1 = East of Hauksness there is a town, 'tis said, where one may purchase weapons of extraordinary quality.
+@@kol_warrior_2 = Hast thou seen Nester? | I think he may need help.
+@@kol_merchant_1 = Hast thou been to the southern island?
+@@kol_merchant_1_yes = I have heard that powerful enemies live there.
+@@kol_merchant_1_no = To the south, I believe, there is a town called Rimuldar.
+
+
+# rimuldar
+# --------
+@@rimuldar_old_man_1_a = Over the western part of this island Erdrick created a rainbow.
+@@rimuldar_old_man_1_b = 'Tis also said that he entered the darkness from a hidden entrance in the room of the Dragonlord.
+@@rimuldar_old_man_2 = This is a magic place. | Hast thou found a magic temple?
+@@rimuldar_old_man_2_yes = In this temple do the sun and rain meet.
+@@rimuldar_old_man_2_no = Go to the south.
+@@rimuldar_old_man_3 = Good day,I am Howard. Four steps south of the bath in Kol thou shalt find a magic item.
+@@rimuldar_boy_1 = Welcome to the town of Rimuldar.
+@@rimuldar_boy_2 = Art thou the descendant of Erdrick? | Hast thou any proof?
+@@rimuldar_boy_3 = Heed my warning! Travel not to the south for there the monsters are fierce and terrible.
+@@rimuldar_boy_4 = I am Orwick, and I am waiting for my girl friend.
+@@rimuldar_guard_1 = Thou shalt find the Stones of Sunlight in Tantegel Castle, if thou has not found them yet.
+@@rimuldar_girl_1 = No, I have no tomatoes. | I have no tomatoes today.
+@@rimuldar_girl_2 = Who art thou? | Leave at once or I will call my friends.
+@@rimuldar_girl_3 = Before long the enemy will arrive.
+@@rimuldar_girl_4 = Orwick is late again. I'm starving.
+@@rimuldar_warrior_1 = You are $$player_name ? | It has been long since last we met.
+@@rimuldar_warrior_2 = The scales of the Dragonlord are as hard as steel.
+@@rimuldar_warrior_3_a = All true warriors wear a ring.
+@@rimuldar_warrior_3_b = Is that a wedding ring? | Thou seems too young to be married.
+@@rimuldar_warrior_4 = In this world is there any sword that can pierce the scales of the Dragonlord?
+@@rimuldar_merchant_1 = Welcome!
+
+
+# cantlin
+# -------
+@@cantlin_guard_1 = Welcome to Cantlin, the castle town.
+@@cantlin_guard_2_a = It is said that many have held Erdrick's armor.
+@@cantlin_guard_2_b = The last to have it was a fellow named Wynn.
+@@cantlin_guard_3_a = 'Tis said that the Dragonlord hath claws that can cleave iron and fiery breath that can melt stone.
+@@cantlin_guard_3_b = Dost thou still wish to go on?
+@@cantlin_guard_3_yes = Thou art truly brave.
+@@cantlin_guard_3_no = That is good. | No one will say thou art afraid.
+@@cantlin_old_man_1 = 'Tis said that Erdrick's sword could cleave steel.
+@@cantlin_old_man_2 = To learn how proof may be obtained that thy ancestor was the great Erdrick, see a man in this very town.
+@@cantlin_old_man_3_a = Let us wish the warrior well!
+@@cantlin_old_man_3_b = May the light be thy strength!
+@@cantlin_old_man_3_c = Thou may go and search.
+@@cantlin_old_man_3_d = From Tantegel Castle travel 70 leagues to the south and 40 to the east.
+@@cantlin_boy_1 = I'm Nester. | Hey, where am I? No, don't tell me!
+@@cantlin_girl_1 = What shall I get for thy dinner?
+@@cantlin_girl_2 = I know nothing.
+@@cantlin_merchant_1 = Grandfather used to say that his friend, Wynn, had buried something of great value at the foot of a tree behind his shop.
+@@cantlin_merchant_2 = Come buy my radishes! They are fresh and cheap. | Buy thy radishes today!
+@@cantlin_merchant_3 = My Grandfather Wynn once had a shop on the east side of Hauksness.
+
+
+# swamp cave
+# ----------
+@@swamp_cave_princess_1 = Thou art brave indeed to rescue me, $$player_name .
+@@swamp_cave_princess_2 = I am Gwaelin, daughter of Lorik.
+@@swamp_cave_princess_3 = Will thou take me to the castle?
+@@swamp_cave_princess_3_no = But thou must.
+@@swamp_cave_princess_3_yes = | Princess Gwaelin embraces thee.
+@@swamp_cave_princess_4 = I'm so happy!
+
+
+# northern shrine
+# ---------------
+@@northern_shrine_old_man_1 = Thy bravery must be proven.
+@@northern_shrine_old_man_2 = Thus, I propose a test.
+@@northern_shrine_old_man_3 = There is a Silver Harp that beckons to the creatures of the Dragonlord.
+@@northern_shrine_old_man_4 = Bring this to me and I will reward thee with the Staff of Rain.
+@@northern_shrine_old_man_5 = Thou hast brought the harp. Good.
+@@northern_shrine_old_man_6 = I have been waiting long for one such as thee.
+@@northern_shrine_old_man_7 = Take the Treasure Chest.
+@@northern_shrine_old_man_8 = Thou hast no business here. | Go away.
+
+
+# southern shrine
+# ---------------
+@@southern_shrine_old_man_1 = In thy task thou hast failed. Alas, I fear thou art not the one Erdrick predicted would save us.
+@@southern_shrine_old_man_2 = Go now!
+@@southern_shrine_old_man_3 = Now the sun and rain shall meet and the Rainbow Drop passes to thy keeping.
+@@southern_shrine_old_man_4 = Thou hast no business here. | Go away.
+
+
+# charlock castle
+# ---------------
+@@charlock_castle_throne_1 = | Feel the wind blowing from behind the throne.
+@@charlock_castle_throne_2 = | $$player_name  discovers the Secret Passage.
+@@charlock_castle_dragon_lord_1 = Welcome, $$player_name . | I am the Dragonlord--King of Kings.
+@@charlock_castle_dragon_lord_2 = I have been waiting long for one such as thee.
+@@charlock_castle_dragon_lord_3 = I give thee now a chance to share this world and to rule half of it if thou will now stand beside me.
+@@charlock_castle_dragon_lord_4 = What sayest thou? | Will the great warrior stand with me?
+@@charlock_castle_dragon_lord_4_no = Thou art a fool!
+@@charlock_castle_dragon_lord_4_yes_a = Really? 
+@@charlock_castle_dragon_lord_4_yes_b = Then half of this world is thine, half of the darkness, and....
+@@charlock_castle_dragon_lord_4_yes_c = If thou dies I can bring thee back for another attempt without loss of thy deeds to date.
+@@charlock_castle_dragon_lord_4_yes_d = | Thy journey is over. | Take now a long, long rest. | Hahahaha....
+@@charlock_castle_dragon_lord_5 = The Dragonlord revealed his true self!
+@@charlock_castle_dragon_lord_6 = Thou hast found the Ball of Light.
+@@charlock_castle_dragon_lord_7 = | Radiance streams forth as thy hands touch the object and hold it aloft.
+@@charlock_castle_dragon_lord_8 = | Across the land spreads the brilliance until all shadows are banished and peace is restored.
+
+
+
+

@@ -1,0 +1,237 @@
+; --- kol --- 
+; -----------
+
+
+; save_point {event_id} {pos_col} {pos_row}
+; ---
+save_point save_point_1 22 1
+
+
+;door {event_name} {sprite_id} {pos_col} {pos_row} {persistent}
+;---
+door door_0 22 7 12 false
+door door_1 22 1 14 false
+
+
+;chest {event_id} {pos_col} {pos_row} {item_id / gold_{value}} {persistent->true|false}
+;---
+chest chest_0 15 20 gold_1 false
+chest chest_1 15 21 gold_1 false
+chest chest_2 15 22 gold_1 false
+
+
+; item_on_ground {event_id} {pos_col} {pos_row} {item_id} {persistent->true/false}
+; ---
+; fairy flute (id = 52)
+item_on_ground item_on_ground_1 9 6 52 false
+
+
+;inn {event_name} {pos_col} {pos_row} {inn_price}
+; ---
+inn inn_1 19 3 20
+
+
+;shop_item {event_name} {pos_col} {pos_row} \
+;   {item_id} {buy_price->value|default_price} {sell_price->value|default_price} \
+;   {item_id} {buy_price->value|default_price} {sell_price->value|default_price} \
+;   {item_id} {buy_price->value|default_price} {sell_price->value|default_price}
+; ---
+shop_item shop_item_1 13 21 \
+    ; herb item (id = 41)
+    41 default_price default_price \
+    ; torch item (id = 43)
+    43 default_price default_price \
+    ; dragon's scale item (id = 44)
+    44 default_price default_price \
+    ; wings item (id = 42)
+    42 default_price default_price
+
+
+;shop_equip {event_name} {pos_col} {pos_row} \
+;   {item_id} {buy_price->value|default_price} {sell_price->value|default_price} \
+;   {item_id} {buy_price->value|default_price} {sell_price->value|default_price} \
+;   {item_id} {buy_price->value|default_price} {sell_price->value|default_price}
+; ---
+shop_equip shop_equip_1 21 12 \
+    ; copper sword (id = 13)
+    13 default_price default_price \
+    ; hand axe (id = 16)
+    16 default_price default_price \
+    ; half plate (id = 24)
+    24 default_price default_price \
+    ; full plate (id = 23)
+    23 default_price default_price \
+    ; small shield (id = 32)
+    32 default_price default_price
+
+
+;npc {event_id} {sprite_start_id} {pos_col} {pos_row} 
+; STATIC {sprite_direction} | RANDOM {rect_col} {rect_row} {rect_width} {rect_height}
+; {texts_global_var_0} ... {texts_global_var_n} | conditional_msgs 
+;    {var_a} {comparisson_operator} {var_b} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+;    {var_c} {comparisson_operator} {var_d} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+;    {var_e} {comparisson_operator} options 2 (no. of options) 2 (default start option [not implemented!]) 0 (cancel_option / -1 will force to choose one of options)
+;                                   {yes_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+;                                   {no_text} {messages_count} {texts_global_var_0} ... {texts_global_var_n}
+; ---
+;    sprite_start_id  description
+; 0                0  hero
+; 1                8  boy
+; 2               16  hero
+; 3               24  girl
+; 4               32  hero
+; 5               40  old_man
+; 6               48  hero
+; 7               56  merchant
+; 8               64  hero_princess
+; 9               72  warrior
+;10               80  princess
+;11               88  dragon_lord
+;12               96  guard
+;13              104  guard_bugle
+;14              106  king
+; ---
+npc npc_shop_item 56 14 21 \
+    STATIC left \
+    @@empty
+
+npc npc_shop_equip 56 22 12 \
+    STATIC left \
+    @@empty
+
+npc npc_inn 56 19 4 \
+    STATIC up \
+    @@empty
+
+
+;@@kol_old_man_1 = This is the village of Kol.
+;@@kol_old_man_2 = In legends it is said that fairies know how to put Golem to sleep.
+;@@kol_old_man_3_a = Though thou art as brave as thy ancestor, $$player_name , thou cannot defeat the great Dragonlord with such weapons.
+;@@kol_old_man_3_b = Thou shouldst come here again.
+;@@kol_old_man_3_c = Finally thou hast obtained it, $$player_name .
+;@@kol_old_man_4 = Hast thou found the flute?
+;@@kol_old_man_4_no = Howard had it, but he went to Rimuldar and never returned.
+;@@kol_old_man_4_yes = Go to the town of Cantlin.
+
+npc old_man_1 40 20 19 \
+    RANDOM 9 9 15 15 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@kol_old_man \
+        1 == 1 1 @@kol_old_man_1
+
+npc old_man_2 40 19 8 \
+    RANDOM 12 3 12 9 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@kol_old_man \
+        1 == 1 1 @@kol_old_man_2
+
+# reference: https://www.youtube.com/watch?v=H-jkOhOTNLA&t=135s
+
+npc old_man_3_a 40 1 1 \
+    STATIC down \
+    @@empty
+
+npc old_man_3_b 112 1 2 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@kol_old_man \
+        ##player_armor_id == 22 1 @@kol_old_man_3_c \
+        1 == 1 2 @@kol_old_man_3_a @@kol_old_man_3_b
+
+npc old_man_4 40 2 12 \
+    RANDOM 0 10 5 4 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@kol_old_man \
+        1 == 1 1 @@kol_old_man_4 options 2 0 1 \
+            @@option_yes 1 @@kol_old_man_4_yes \
+            @@option_no 1 @@kol_old_man_4_no
+
+
+;@@kol_boy_1_a = Dreadful is the South Island.
+;@@kol_boy_1_b = Great strength and skill and wit only will bring thee back from that place.
+;@@kol_boy_2 = Art thou the descendant of Erdrick? | Hast thou any proof?
+
+npc boy_1 8 14 14 \
+    RANDOM 7 5 11 15 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 2 @@kol_boy_1_a @@kol_boy_1_b
+
+npc boy_2 8 5 12 \
+    RANDOM 0 9 9 15 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@kol_boy_2
+
+;@@kol_guard_1 = Golem is afraid of the music of the flute, so 'tis said.
+;@@kol_guard_2 = Rimuldar is the place to buy keys.
+
+npc guard_1 96 13 9 \
+    RANDOM 7 0 11 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@garinham_old_man \
+        1 == 1 1 @@kol_guard_1
+
+npc guard_2 96 1 23 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@garinham_old_man \
+        1 == 1 1 @@kol_guard_2
+
+
+;@@kol_girl_1 = Please, save us from the minions of the Dragonlord.
+;@@kol_girl_2 = This bath cures rheumatism.
+
+npc girl_1 24 11 15 \
+    RANDOM 6 6 14 16 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@kol_girl_1
+
+npc girl_2 24 12 1 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@kol_girl_2
+
+
+;@@kol_warrior_1 = East of Hauksness there is a town, 'tis said, where one may purchase weapons of extraordinary quality.
+;@@kol_warrior_2 = Hast thou seen Nester? | I think he may need help.
+
+npc warrior_1 72 20 13 \
+    STATIC down \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@kol_warrior_1
+
+npc warrior_2 72 6 6 \
+    RANDOM 4 0 14 13 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@kol_warrior_2
+
+
+;@@kol_merchant_1 = Hast thou been to the southern island?
+;@@kol_merchant_1_yes = I have heard that powerful enemies live there.
+;@@kol_merchant_1_no = To the south, I believe, there is a town called Rimuldar.
+
+npc merchant_1 56 7 19 \
+    RANDOM 5 16 5 8 \
+    conditional_msgs \
+        ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
+        ; ##game_state_princess_rescued == 1 1 @@empty \
+        1 == 1 1 @@kol_merchant_1 options 2 0 1 \
+            @@option_yes 1 @@kol_merchant_1_yes \
+            @@option_no 1 @@kol_merchant_1_no

@@ -1,0 +1,80 @@
+# tileset size imageFileName,tileWidth,tileHeight
+tileset
+16
+17
+
+# tileset extra information
+# tileId,propertyName=propertyValue[,propertyName=propertyValue[,...]]
+
+0,blocked=false,damagePerStep=0,battleBackgroundId=0,enemy_probability=1/24
+1,blocked=false,damagePerStep=0,battleBackgroundId=1,enemy_probability=1/16
+2,blocked=false,damagePerStep=0,battleBackgroundId=2,enemy_probability=1/16
+3,blocked=true,damagePerStep=0,battleBackgroundId=2,enemy_probability=0/1
+4,blocked=false,damagePerStep=0,battleBackgroundId=3,enemy_probability=1/8
+5,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=1/8
+
+6,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+7,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+8,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+9,blocked=false,damagePerStep=0,battleBackgroundId=0,enemy_probability=1/24
+10,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+11,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+
+12,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+13,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+14,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+15,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+16,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+17,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+
+18,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+19,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+20,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+21,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+22,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+23,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+
+24,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+25,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+26,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+27,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+28,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+29,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+
+30,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+31,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+32,blocked=false,damagePerStep=0,battleBackgroundId=9,enemy_probability=1/16
+33,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+34,blocked=false,damagePerStep=15,battleBackgroundId=12,enemy_probability=1/16
+35,blocked=false,damagePerStep=2,battleBackgroundId=4,enemy_probability=1/16
+
+36,blocked=true,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+
+# use tiles below to avoid enemies encounters
+
+37,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+38,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+39,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+40,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+41,blocked=false,damagePerStep=0,battleBackgroundId=12,enemy_probability=0/1
+
+# --- enemy_probability ---
+#Zone 0
+#Grasslands: 1/48
+#Bridge:     1/48
+#Forest:     1/32
+#Hills:      1/32
+#Desert:     1/16 (There is only one square of desert in this region)
+#
+#Every other zone, including dungeons
+#Grasslands: 1/24
+#Swamp:      1/16
+#Forest:     1/16
+#Hills:      1/8
+#Desert:     1/8
+#
+#Stairs:     1/24
+#Chest:      1/24
+#Barrier:    1/16
+#Brick:      1/16
+
