@@ -163,10 +163,11 @@ public class Game {
         OLPresents.draw(g);
         View.refresh();
         sleep(3000);
+        startTime = System.currentTimeMillis();
         while (OLPresents.update()) {
             OLPresents.draw(g);
             View.refresh();
-            sleep(1000 / 60);
+            sync30fps();
         }
         String presents = getText("@@presents");
         for (int i = 0; i < presents.length(); i++) {
@@ -181,15 +182,17 @@ public class Game {
     private static void updateTitle() throws Exception {
         View.showImage(1, "title", 0, 0);
         sleep(2000);
+        long introMusicStartTime = System.currentTimeMillis();
         Audio.playMusic("intro");
         View.fadeIn();
         Graphics2D g = View.getOffscreenGraphics2D(1);
-        for (int i = 0; i < 370; i++) {
+        startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() - introMusicStartTime < 10500) {
             titleShineAnimation.update();
             View.showImage(1, "title", 0, 0);
             titleShineAnimation.draw(g, 179, 60);
             View.refresh();
-            Game.sleep(1000 / 60);
+            sync30fps();
         }
         Audio.playSound(Audio.SOUND_SHOW_OPTIONS_MENU);
         View.showImage(1, "title", 0, -240);
@@ -337,10 +340,12 @@ public class Game {
 
     }
     
+    private static long startTime;
+    
     private static void updateMap() throws Exception {
+        startTime = System.currentTimeMillis();
         boolean exitMap = false;
         while (!exitMap) {
-            
             // if the player is out of walkable area, 
             // he is automatically teleported to the configured location
             Area mapArea = currentMap.getCurrentArea();
@@ -375,8 +380,19 @@ public class Game {
             }
             currentMap.update();
             redraw();
-            sleep(1000 / 60);
+            sync30fps();
         }
+    }
+    
+    // innacurate but i think it's ok xD ...
+    private static void sync30fps() {
+        long endTime = System.currentTimeMillis();
+        int waitTime = (int) (33 - (endTime - startTime));
+        if (waitTime < 1) {
+            waitTime = 1;
+        }
+        startTime = endTime;
+        sleep(waitTime);
     }
     
     @ScriptCommand(name = "force_redraw")
