@@ -33,7 +33,7 @@ teleport teleport_2 28 12 41 \
          false true
 
 
-; green dragon - princess guardian enemy TODO
+; green dragon - princess guardian enemy
 ; note: it's necessary to defeat the green dragon just once. if you leave
 ;       the cave and enter again, the dragon will not appear again.
 ; ---

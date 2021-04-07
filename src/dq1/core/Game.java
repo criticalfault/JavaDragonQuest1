@@ -129,7 +129,7 @@ public class Game {
     }
     
     private static void testStartLoadingSavedGame() throws Exception {
-        Map<String, Object> loadedGlobalVars = Script.loadVars(1);
+        Map<String, Object> loadedGlobalVars = Script.loadVars(3);
         loadGameInternal(loadedGlobalVars);
     }
     

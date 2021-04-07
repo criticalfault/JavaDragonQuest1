@@ -1032,5 +1032,6 @@ npc old_man_2 40 100 18 \
     conditional_msgs \
         ##game_state_dragon_lord_defeated == 1 1 @@dragon_lord_defeated_1 \
         ; ##game_state_princess_rescued == 1 1 @@tantegel_old_man \
+        ##player_item_58 > 0 1 @@tantegel_old_man_2_c \
         ##player_item_55 > 0 1 @@tantegel_old_man_2_c \
         1 == 1 2 @@tantegel_old_man_2_a @@tantegel_old_man_2_b

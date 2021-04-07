@@ -820,7 +820,7 @@ public class Player {
             hideSimplifiedStatus();
         }
         else if ((-walking % 15) == 0) {
-            System.out.println(walking);
+            //System.out.println(walking);
             Audio.playSound(Audio.SOUND_BLOCKED);
         }
     }
@@ -949,8 +949,8 @@ public class Player {
             }
             // repel or fairy water worked
             else if (repeling && getDef() / 2 > enemy.getStr() / 2) {
-                System.out.println(
-                        "enemy " + enemy.getName() + " was evaded.");
+                //System.out.println(
+                //        "enemy " + enemy.getName() + " was evaded.");
                 return;
             }
             Battle.start(enemy, tile, false, false, BATTLE_MUSIC_ID);

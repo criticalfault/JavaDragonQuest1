@@ -31,11 +31,6 @@ public class EventFactory {
     public static Event createNpcEvent(String[] args) throws Exception {
         Event event = new Event();
         String eventId = args[1]; // {event_id} 
-        
-        if (eventId.equals("guard_3")) {
-            System.out.println("teste");
-        }
-        
         event.setId(eventId);
         event.setType("npc");
         // {sprite_start_id} 
