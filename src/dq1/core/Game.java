@@ -384,8 +384,14 @@ public class Game {
         }
     }
     
+    @ScriptCommand(name = "start_sync_30_fps")
+    public static void startSync30fps() {
+        startTime = System.currentTimeMillis();
+    }
+    
     // innacurate but i think it's ok xD ...
-    private static void sync30fps() {
+    @ScriptCommand(name = "sync_30_fps")
+    public static void sync30fps() {
         long endTime = System.currentTimeMillis();
         int waitTime = (int) (33 - (endTime - startTime));
         if (waitTime < 1) {
@@ -1044,6 +1050,7 @@ public class Game {
             if (!direction.equals("stay")) {
                 Player.changeDirection(direction);
             }
+            startTime = System.currentTimeMillis();
             for (int i = 0; i < 16; i++) {
                 Player.incX(walkDx);
                 Player.incY(walkDy);
@@ -1052,11 +1059,12 @@ public class Game {
                     eventTmp.getAnimation().update();
                 }
                 redraw();
-                sleep(1000 / 60);
+                sync30fps();
             }
             Player.setLocation(Player.getMapRow(), Player.getMapCol());
         }
         else {
+            startTime = System.currentTimeMillis();
             for (int i = 0; i < 16; i++) {
                 for (Event eventTmp : currentMap.getEvents()) {
                     if (eventTmp.getId().equals(eventId)) {
@@ -1070,7 +1078,7 @@ public class Game {
                 }
                 Player.getAnimation().update();
                 redraw();
-                sleep(1000 / 60);
+                sync30fps();
             }
         }
     }

@@ -2,37 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Debug.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/BitmapFont.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Event.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Player.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/assets/res/event/tantegel_castle.evt</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/assets/res/inf/items.inf</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/PlayerLevel.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/EventFactory.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Animation.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Inventory.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Resource.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Shop.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/TileMap.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/OLPresents.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Input.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/assets/res/event/swamp_cave.evt</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Enemy.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Tile.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/assets/res/inf/texts.inf</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Battle.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Magic.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Item.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Script.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Spell.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Dialog.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Util.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/View.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Game.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Audio.java</file>
-            <file>file:/D:/dragonquest1/final/JavaDragonQuest1/src/dq1/core/Settings.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

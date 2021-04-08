@@ -472,6 +472,21 @@ script
                 sleep 2000
                 screen_show_image 2 "ending" 0 0 
                 screen_fade_in
+                sleep 10000
+
+                ;log "starting_end_scroll"
+                set #scroll_y 0
+                start_sync_30_fps
+            ending_scroll_y:
+                ;log "end_scroll_y=" #scroll_y
+                div #scroll_y2 #scroll_y 2
+                screen_show_image 2 "ending" 0 #scroll_y2
+                force_redraw
+                sync_30_fps
+                sub #scroll_y #scroll_y 1
+                if #scroll_y ">" -3360 "ending_scroll_y"
+                ;log "starting_end_scroll_finished"
+
             ending_halt:
                 screen_refresh
                 sleep 100
